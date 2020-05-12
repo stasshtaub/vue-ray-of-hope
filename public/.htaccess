@@ -1,0 +1,10 @@
+php_value short_open_tag 1
+php_value display_errors 1
+
+RewriteEngine On
+RewriteRule ^api/.* api/index.php
+RewriteBase /
+RewriteRule ^index\.html$ - [L]
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule . /index.html [L]
