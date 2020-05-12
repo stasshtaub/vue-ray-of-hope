@@ -2,10 +2,6 @@ import Vue from 'vue'
 import Router from 'vue-router'
 import store from '../vuex/store'
 
-import homeView from '../views/homeView'
-import feedView from '../views/feedView'
-
-
 Vue.use(Router);
 
 let router = new Router({
@@ -13,22 +9,23 @@ let router = new Router({
     routes: [{
         path: '/',
         component: () => store.getters.IS_AUTHENTICATED ?
-            feedView : homeView
+            import ('../views/feedView') : import ('../views/homeView'),
     }, {
         path: '/messages',
         component: () =>
             import ('../views/messagesView'),
+        children: [{
+            path: '/',
+            component: () =>
+                import ("../components/dialogsList"),
+        }, {
+            path: ':fromId',
+            component: () =>
+                import ("../components/dialog"),
+        }],
         meta: {
             requiresAuth: true
         },
-    }, {
-        path: '/messages/:fromId',
-        component: () =>
-            import ('../components/dialog'),
-        meta: {
-            requiresAuth: true
-        },
-        props: true
     }, {
         path: '/edit',
         component: () =>
@@ -49,8 +46,20 @@ let router = new Router({
             guest: true
         }
     }, {
+        path: '/login',
+        component: () =>
+            import ('../views/formView'),
+        children: [{
+            path: 'organization',
+            component: () =>
+                import ('../components/loginFormOrg'),
+        }],
+        meta: {
+            guest: true
+        }
+    }, {
         path: '/feed',
-        component: feedView,
+        component: import ('../views/feedView'),
         meta: {
             requiresAuth: true
         }

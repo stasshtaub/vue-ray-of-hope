@@ -14,33 +14,36 @@
           <textbox
             :name="'Название'"
             :placeholder="'Введите название...'"
-            :v-model="editedProfile.name=text"
+            v-model="editedProfile.name"
           />
           <custom-select
             :placeholder="'Вид деятельности...'"
-            :options="[{name: 'Животные'}, {name: 'Дети'}]"
-            @change="(val)=>{editedProfile.activity=val}"
+            :options="[{ name: 'Животные' }, { name: 'Дети' }]"
+            @change="
+              activity => {
+                editedProfile.activity = activity.name;
+              }
+            "
           />
         </div>
       </div>
       <textbox
+        v-model="editedProfile.description"
         :type="'textarea'"
         :name="'Описание'"
         :placeholder="'Введите описание...'"
-        :v-model="editedProfile.description"
       />
       <textbox
-        :text="editedProfile.phone"
+        v-model="editedProfile.phone"
         :name="'Телефон'"
         :placeholder="'Введите номер телефона...'"
-        @input="(text)=>{editedProfile.phone=text}"
       />
       <city-list-textbox
         :cityList="cityList"
         :name="'Адрес'"
         :placeholder="'Введите адрес...'"
         @input="requestCityList"
-        @change="editedProfile.city=city.id"
+        @change="city => (editedProfile.city = city.id)"
       />
       <div class="buttons">
         <button class="fill" @click="editRequest">Сохранить</button>
@@ -48,7 +51,11 @@
     </div>
     <div class="docs">
       <div class="imput-title-docs">Документы</div>
-      <profile-doc-list :docs="editedProfile.docs" :canUpload="true" @addDoc="docInput" />
+      <profile-doc-list
+        :docs="editedProfile.docs"
+        :canUpload="true"
+        @addDoc="docInput"
+      />
     </div>
   </div>
 </template>

@@ -67,6 +67,7 @@ export default {
   width: 100vw;
   background-color: #fff;
   height: 60px;
+  box-shadow: 0 0px 5px #d6d6d6;
 }
 .user-navbar .container {
   height: 100%;

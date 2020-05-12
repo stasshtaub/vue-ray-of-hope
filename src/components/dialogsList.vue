@@ -1,24 +1,42 @@
 <template>
   <div class="dialogs-list">
-    <dialogs-list-item v-for="dialog in dialogs" :key="dialog.userFrom" :dialog="dialog"></dialogs-list-item>
+    <dialogs-list-item
+      v-for="dialog in dialogs"
+      :key="dialog.userFrom"
+      :dialog="dialog"
+    ></dialogs-list-item>
   </div>
 </template>
 
 <script>
+import axios from "axios";
 export default {
   name: "dialogs-list",
   components: {
-    dialogsListItem: () => import("./dialogsListItem")
+    dialogsListItem: () => import("./dialogsListItem"),
   },
-  props: {
-    dialogs: {
-      default: []
-    }
-  }
+  data: () => ({
+    dialogs: [],
+  }),
+  methods: {
+    getDialogs() {
+      axios
+        .get("/api/dialogs")
+        .then((resp) => {
+          this.dialogs = resp.data.dialogs;
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    },
+  },
+  mounted() {
+    this.getDialogs();
+  },
 };
 </script>
 
-<style >
+<style>
 .dialogs-list {
   display: grid;
   grid-gap: 20px;

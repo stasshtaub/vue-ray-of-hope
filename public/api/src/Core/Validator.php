@@ -97,11 +97,6 @@ class Validator
                         $errors[$key] = "Некорректный id города";
                     }
                     break;
-                case 'activity':
-                    if (!static::checkInDB($value, 'activity')) {
-                        $errors[$key] = "Некорректный id активности";
-                    }
-                    break;
                 case 'avatar':
                     $tmpname = $value['tmp_name'];
                     $types = [IMAGETYPE_JPEG, IMAGETYPE_PNG, IMAGETYPE_BMP, IMAGETYPE_WEBP];
@@ -121,6 +116,6 @@ class Validator
 
         $query = "SELECT id FROM $table WHERE id=$id";
         $city = $DB->execute($query, null, true);
-        return boolval(strlen($city));
+        return boolval(count($city));
     }
 }

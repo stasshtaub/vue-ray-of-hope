@@ -11,10 +11,9 @@
         </a>
       </li>
     </ul>
-    <button
-      v-if="limit && docs.length>limit"
-      @click="showAll=!showAll"
-    >{{showAll?"Скрыть":`Все документы (${docs.length})`}}</button>
+    <button v-if="limit && docs.length > limit" @click="showAll = !showAll">
+      {{ showAll ? "Скрыть" : `Все документы (${docs.length})` }}
+    </button>
   </div>
 </template>
 
@@ -35,6 +34,9 @@ export default {
       default: false
     }
   },
+  data: () => ({
+    showAll: false
+  }),
   components: {
     plusIcon: () => import("./svg/plusIcon")
   },
@@ -88,7 +90,7 @@ export default {
   color: #bfbfbf;
   font: unset;
 }
-.add-doc{
+.add-doc {
   cursor: pointer;
 }
 .add-doc > input {

@@ -1,17 +1,17 @@
 <template>
   <div class="city-list-textbox">
-    <div class="textbox-title">{{name}}</div>
+    <div class="textbox-title">{{ name }}</div>
     <input
       type="text"
-      :style="{width: `calc(${width} - 24px)`}"
+      :style="{ width: `calc(${width} - 24px)` }"
       :placeholder="placeholder"
       v-model="text"
       @input="$emit('input', text)"
     />
     <ul class="dropdown" v-if="cityList.length">
       <li v-for="city in cityList" :key="city.id" @click="selectCity(city)">
-        <p class="city">{{city.name}}</p>
-        <p class="region">{{city.region}}</p>
+        <p class="city">{{ city.name }}</p>
+        <p class="region">{{ city.region }}</p>
       </li>
     </ul>
   </div>
@@ -73,7 +73,10 @@ export default {
 .city-list-textbox > .dropdown {
   display: grid;
   grid-gap: 8px;
-  width: 100%;
+  width: calc(100% - 24px);
+  position: absolute;
+  background: white;
+  top: calc(100% + 4px);
 }
 .city-list-textbox > .dropdown > li {
   cursor: pointer;

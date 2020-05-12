@@ -7,7 +7,7 @@ class DB
     public $pdo;
     private $host = "localhost",
         $user = "root",
-        $password = "root",
+        $password = "",
         $db_name = "ray-of-hope",
         $opt = [
             \PDO::ATTR_ERRMODE => \PDO::ERRMODE_EXCEPTION,

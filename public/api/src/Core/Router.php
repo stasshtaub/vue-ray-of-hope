@@ -48,6 +48,14 @@ class Router
                 "controllerName" => "Controllers\\cityController",
                 "method" => "getCityList"
             ]);
+            $r->addRoute('GET', '/api/dialogs', [
+                "controllerName" => "Controllers\\dialogController",
+                "method" => "getDialogs"
+            ]);
+            $r->addRoute('GET', '/api/dialogs/{id:\d+}', [
+                "controllerName" => "Controllers\\dialogController",
+                "method" => "getDialogs"
+            ]);
             $r->addRoute('DELETE', '/api/organizations/{oid:\d+}/posts/{pid:\d+}', [
                 "controllerName" => "Controllers\\postController",
                 "method" => "delete"
