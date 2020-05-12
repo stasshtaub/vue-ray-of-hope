@@ -66,4 +66,7 @@ export default {
   border-radius: 12px;
   border: 1px solid #d9d9d9;
 }
+textarea{
+  resize: none;
+}
 </style>

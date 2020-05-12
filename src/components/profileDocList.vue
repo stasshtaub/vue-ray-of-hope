@@ -1,20 +1,20 @@
 <template>
   <div class="profile-doc-list">
-    <button
-      v-if="limit && docs.length>limit"
-      @click="showAll=!showAll"
-    >{{showAll?"Скрыть":`Все документы (${docs.length})`}}</button>
     <ul class="doc-list">
+      <label class="add-doc" v-if="canUpload">
+        <plus-icon />
+        <input type="file" multiple @input="$emit('addDoc', $event)" />
+      </label>
       <li class="doc" v-for="doc in limited" :key="doc.id">
         <a :href="doc.url">
           <img :src="doc.preview" alt="doc-preview" />
         </a>
       </li>
-      <label class="add-doc" v-if="canUpload">
-        <plus-icon />
-        <input type="file" multiple @input="$emit('addDoc', $event)" />
-      </label>
     </ul>
+    <button
+      v-if="limit && docs.length>limit"
+      @click="showAll=!showAll"
+    >{{showAll?"Скрыть":`Все документы (${docs.length})`}}</button>
   </div>
 </template>
 
@@ -87,6 +87,9 @@ export default {
   display: block;
   color: #bfbfbf;
   font: unset;
+}
+.add-doc{
+  cursor: pointer;
 }
 .add-doc > input {
   display: none;

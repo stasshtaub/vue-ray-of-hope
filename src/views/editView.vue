@@ -43,10 +43,8 @@
         @change="editedProfile.city=city.id"
       />
       <div class="buttons">
-        <button class="payInfoButton">Платёжная информация</button>
-        <button class="saveButton">Сохранить</button>
+        <button class="fill" @click="editRequest">Сохранить</button>
       </div>
-      <button @click="editRequest">Сохранить</button>
     </div>
     <div class="docs">
       <div class="imput-title-docs">Документы</div>
@@ -131,10 +129,7 @@ export default {
           requestData[key] = this.editedProfile[key];
         }
       }
-      console.log(
-        "docs совпадают:",
-        this.PROFILE.docs === this.editedProfile.docs
-      );
+      console.log(this.PROFILE.docs === this.editedProfile.docs);
       if (Object.keys(requestData).length) {
         this.EDIT_PROFILE(requestData)
           .then(resp => {
@@ -168,6 +163,7 @@ export default {
   display: none;
 }
 label.uploadPhoto {
+  cursor: pointer;
   position: absolute;
   right: -5px;
   bottom: -5px;
@@ -183,10 +179,13 @@ label.uploadPhoto {
   justify-content: center;
   margin-left: 20px;
 }
-.name-activity>*:first-of-type {
-    margin-bottom: 20px;
+.name-activity > *:first-of-type {
+  margin-bottom: 20px;
 }
 .edit-view .info > *:not(:last-of-type) {
   margin-bottom: 20px;
+}
+.edit-view .buttons > *:not(:last-of-type) {
+  margin-right: 10px;
 }
 </style>

@@ -42,4 +42,17 @@ export default {
   border-radius: 10px;
   background-color: white;
 }
+button.fill,
+button.contur {
+  border-radius: 12px;
+  padding: 8px 20px;
+  border: 1px solid #007bf5;
+}
+button.fill {
+  background-color: #007bf5;
+  color: white;
+}
+button.contur {
+  color: #007bf5;
+}
 </style>

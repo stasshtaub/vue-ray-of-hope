@@ -35,15 +35,15 @@
           </router-link>
 
           <template v-else>
-            <button id="in-favorites">
+            <button class="fill">
               <heart-icon />
               <span>В любимые</span>
             </button>
-            <button id="message">
+            <button class="fill">
               <img class="mess-icon" src="/assets/img/mess_icon.png " />
               <span>Написать</span>
             </button>
-            <button id="donate">
+            <button class="fill">
               <span>Пожертовать</span>
             </button>
           </template>
@@ -142,5 +142,8 @@ export default {
 
 .contacts > .wrp:not(:last-of-type) {
   margin-bottom: 5px;
+}
+.profile-info .buttons>*:not(:last-of-type) {
+    margin-right: 10px;
 }
 </style>
