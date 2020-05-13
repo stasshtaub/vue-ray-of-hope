@@ -30,7 +30,6 @@ class convertController
                 break;
             case "pdf":
                 if (mime_content_type($doc['tmp_name']) !== "application/pdf") {
-                    echo "case pdf";
                     throw new \Exception("BAD_FILE_FORMAT", 400);
                 }
                 $jpgPath = $this->model->pdfToJpg($doc['name'], $doc['tmp_name']);
@@ -39,7 +38,6 @@ class convertController
                 unlink($jpgPath);
                 break;
             default:
-                echo "case default";
                 throw new \Exception("BAD_FILE_FORMAT", 400);
         }
     }

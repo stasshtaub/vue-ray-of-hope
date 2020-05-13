@@ -22,7 +22,6 @@ class loginController
                 if (!empty($headers["authorization"]) || !empty($headers["Authorization"])) {
                     $token = !empty($headers["authorization"]) ? $headers["authorization"] : $headers["Authorization"];
                     http_response_code(200);
-                    $result["status"] = "OK";
                     $result["profile"] = $this->model->loginWithToken($token);
                     echo json_encode($result, JSON_PRETTY_PRINT);
                 } else {
@@ -31,9 +30,7 @@ class loginController
                 break;
             case 2:
                 http_response_code(200);
-                $result["status"] = "OK";
-                $result["data"] = $this->model->login($args[0], md5($args[1] . 'ray-of-hope'));
-                echo json_encode($result, JSON_PRETTY_PRINT);
+                echo json_encode($this->model->login($args[0], md5($args[1] . 'ray-of-hope')), JSON_PRETTY_PRINT);
                 break;
             default:
                 throw new \Exception("BAD_ARGUMENTS_COUNT", 401);

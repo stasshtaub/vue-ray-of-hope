@@ -34,7 +34,6 @@ class loginModel
                 "profile" => $profile
             ];
         } else {
-            echo "BAD_LOGIN_DATA excp";
             throw new \Exception("BAD_LOGIN_DATA", 401);
         }
     }

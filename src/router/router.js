@@ -22,6 +22,7 @@ let router = new Router({
             path: ':fromId',
             component: () =>
                 import ("../components/dialog"),
+            props: true
         }],
         meta: {
             requiresAuth: true
@@ -76,6 +77,9 @@ let router = new Router({
             component: () =>
                 import ("../views/profileView")
         }],
+        meta: {
+            requiresAuth: true
+        }
     }]
 })
 

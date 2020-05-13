@@ -1,14 +1,19 @@
 <template>
   <div class="form-textbox">
     <div class="tooltip" v-if="error || tooltip" @click="click">
-      {{error ? "!" : "?"}}
+      {{ error ? "!" : "?" }}
       <div
         class="hint"
-        v-if="error && !hideError || tooltip && !hideTooltip"
+        v-if="(error && !hideError) || (tooltip && !hideTooltip)"
         v-html="error || tooltip"
       ></div>
     </div>
-    <input :type="type" :placeholder="placeholder" @input="updateValue($event.target.value)" />
+    <input
+      v-model="value"
+      :type="type"
+      :placeholder="placeholder"
+      @input="$emit('input', value)"
+    />
   </div>
 </template>
 
@@ -18,41 +23,38 @@ export default {
   props: {
     value: {
       type: String,
-      default: null
+      default: "",
     },
     type: {
       type: String,
-      default: "text"
+      default: "text",
     },
     placeholder: {
       type: String,
-      default: ""
+      default: "",
     },
     tooltip: {
       type: String,
-      default: ""
+      default: "",
     },
     error: {
       type: String,
-      default: ""
-    }
+      default: "",
+    },
   },
   data: () => ({
     hideError: false,
-    hideTooltip: true
+    hideTooltip: true,
   }),
   methods: {
-    async updateValue(value) {
-      this.$emit("input", value);
-    },
     click() {
       if (this.error) {
         this.hideError = !this.hideError;
       } else {
         this.hideTooltip = !this.hideTooltip;
       }
-    }
-  }
+    },
+  },
 };
 </script>
 
