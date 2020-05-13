@@ -1,6 +1,6 @@
 <template>
   <div class="organizations-view">
-    <router-view></router-view>
+    <router-view :key="$route.fullPath"></router-view>
     <!-- <organizations-list :organizations="organizations"></organizations-list> -->
   </div>
 </template>

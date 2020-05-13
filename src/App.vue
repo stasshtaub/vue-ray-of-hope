@@ -13,13 +13,13 @@ export default {
   name: "App",
   components: {
     guestLayout,
-    userLayout
+    userLayout,
   },
   computed: {
     ...mapGetters(["IS_AUTHENTICATED"]),
     currentLayout() {
       return this.IS_AUTHENTICATED ? userLayout : guestLayout;
-    }
+    },
   },
   methods: {
     ...mapActions(["LOGIN_WITH_TOKEN"]),
@@ -28,7 +28,12 @@ export default {
     if (this.IS_AUTHENTICATED) {
       this.LOGIN_WITH_TOKEN();
     }
-  }
+  },
+  watch: {
+    IS_AUTHENTICATED() {
+      this.$router.go(this.$router.currentRoute);
+    },
+  },
 };
 </script>
 

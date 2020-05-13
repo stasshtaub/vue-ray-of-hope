@@ -91,7 +91,6 @@ export default {
 
 <style>
 .profile-info {
-  grid-area: 1/1/2/3;
   padding: 30px 45px;
   display: flex;
   flex-wrap: wrap;

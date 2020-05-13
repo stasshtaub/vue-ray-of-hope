@@ -3,14 +3,14 @@
 namespace Controllers;
 
 use Core\Validator;
-use Models\organizationsModel;
+use Models\organizationModel;
 
 class organizationController
 {
     private $model;
     function __construct()
     {
-        $this->model = new organizationsModel();
+        $this->model = new organizationModel();
     }
 
     function getOrg($id)

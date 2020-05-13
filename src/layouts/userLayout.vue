@@ -4,7 +4,7 @@
       <user-navbar></user-navbar>
       <div class="container">
         <keep-alive>
-          <router-view :key="$route.fullPath"></router-view>
+          <router-view></router-view>
         </keep-alive>
       </div>
     </template>
@@ -17,11 +17,11 @@ import userNavbar from "../components/userNavbar";
 export default {
   name: "user-layout",
   components: {
-    userNavbar
+    userNavbar,
   },
   computed: {
-    ...mapGetters(["PROFILE"])
-  }
+    ...mapGetters(["PROFILE"]),
+  },
 };
 </script>
 

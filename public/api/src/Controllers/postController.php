@@ -14,13 +14,11 @@ class postController
 
     function getPostsOrg($oid, $type = null)
     {
-        $result["status"] = "OK";
         $result["posts"] = $this->model->getOrganizationPosts($oid, $type);
         echo json_encode($result, JSON_PRETTY_PRINT);
     }
     function getPostOrg($oid, $pid)
     {
-        $result["status"] = "OK";
         $result["post"] = $this->model->getOrganizationPost($oid, $pid);
         echo json_encode($result, JSON_PRETTY_PRINT);
     }
@@ -47,7 +45,6 @@ class postController
                 "value" => $filerValue
             ];
         }
-        $result["status"] = "OK";
         $result["posts"] = $this->model->getFeed($filters);
         echo json_encode($result, JSON_PRETTY_PRINT);
     }

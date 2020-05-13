@@ -49,7 +49,6 @@ export default {
 
 <style>
 .switch-posts {
-  grid-area: 2/1/3/2;
   padding: 30px;
   height: fit-content;
   display: grid;

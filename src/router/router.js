@@ -60,7 +60,8 @@ let router = new Router({
         }
     }, {
         path: '/feed',
-        component: import ('../views/feedView'),
+        component: () =>
+            import ('../views/feedView'),
         meta: {
             requiresAuth: true
         }

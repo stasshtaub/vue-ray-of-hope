@@ -6,44 +6,39 @@
 
 <script>
 import axios from "axios";
-import { mapGetters } from "vuex";
+
 export default {
-  name: "profile-view",
+  name: "feed-view",
   components: {
-    postsList: () => import("../components/postsList")
+    postsList: () => import("../components/postsList"),
   },
   data: () => ({
     postsType: null,
-    posts: []
+    posts: [],
   }),
-  computed: {
-    ...mapGetters(["PROFILE"])
-  },
   methods: {
     changeType(type) {
       this.postsType = type;
-      this.getProducts();
+      this.getFeed();
     },
-    getProducts() {
-      if (this.PROFILE) {
-        axios
-          .get("/api/feed", {
-            params: {
-              type: this.postsType
-            }
-          })
-          .then(resp => {
-            this.posts = resp.data.posts;
-          })
-          .catch(err => {
-            console.log(err);
-          });
-      }
-    }
+    getFeed() {
+      axios
+        .get("/api/feed", {
+          params: {
+            type: this.postsType,
+          },
+        })
+        .then((resp) => {
+          this.posts = resp.data.posts;
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    },
   },
   mounted() {
-    this.getProducts();
-  }
+    this.getFeed();
+  },
 };
 </script>
 

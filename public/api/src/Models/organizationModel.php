@@ -4,7 +4,7 @@ namespace Models;
 
 use Core\DB;
 
-class organizationsModel
+class organizationModel
 {
     private $DB;
     function __construct()

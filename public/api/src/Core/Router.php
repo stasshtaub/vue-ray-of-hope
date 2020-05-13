@@ -27,7 +27,7 @@ class Router
                 "controllerName" => "Controllers\\postController",
                 "method" => "getPostOrg"
             ]);
-            $r->addRoute('GET', '/api/organizations/{oid:\d+}/posts', [
+            $r->addRoute('GET', '/api/organizations/{oid:\d+}/posts[?\w+]', [
                 "controllerName" => "Controllers\\postController",
                 "method" => "getPostsOrg"
             ]);

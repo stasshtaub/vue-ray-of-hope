@@ -1,31 +1,36 @@
 <template>
   <article class="post frame">
     <header>
-      <router-link class="author" :to="'/organizations/'+post.author.id">
+      <router-link class="author" :to="'/organizations/' + post.author.id">
         <avatar :img="post.author.avatar || undefined" />
-        <p class="name">{{post.author.name}}</p>
+        <p class="name">{{ post.author.name }}</p>
       </router-link>
       <div class="wrp-right">
-        <p class="date">{{post.date}}</p>
-        <button class="delete" @click="$emit('delete')">
+        <p class="date">{{ post.date }}</p>
+        <button class="delete" v-if="isSelf" @click="$emit('delete')">
           <delete-icon />
         </button>
       </div>
     </header>
     <div class="content">
-      <p class="post_text">{{post.text}}</p>
-      <post-image-list v-if="post.images.length" :images="post.images"></post-image-list>
+      <p class="post_text">{{ post.text }}</p>
+      <post-image-list
+        v-if="post.images.length"
+        :images="post.images"
+      ></post-image-list>
       <div v-if="post.eventData" class="location_date">
         <location-icon :width="20" />
         <div class="location_date_wrapper">
-          <p class="date">{{post.eventData.date}}</p>
-          <p class="location">{{post.eventData.location}}</p>
+          <p class="date">{{ post.eventData.date }}</p>
+          <p class="location">{{ post.eventData.location }}</p>
         </div>
       </div>
       <div v-if="post.needData" class="progress">
         <div class="count">
-          <span class="collected_count">{{post.needData.collectedCount}}</span>
-          <span class="need_count">{{post.needData.needCount}}</span>
+          <span class="collected_count">{{
+            post.needData.collectedCount
+          }}</span>
+          <span class="need_count">{{ post.needData.needCount }}</span>
         </div>
         <div class="bar">
           <div class="line_full">
@@ -47,13 +52,7 @@
 </template>
 
 <script>
-import postImageList from "./postImageList";
-import avatar from "./avatar";
-
-import deleteIcon from "./svg/deleteIcon";
-import commentIcon from "./svg/commentIcon";
-import bookmarksIcon from "./svg/bookmarksIcon";
-import locationIcon from "./svg/locationIcon";
+import { mapGetters } from "vuex";
 
 export default {
   name: "post",
@@ -67,18 +66,24 @@ export default {
         images: [],
         date: null,
         eventData: null,
-        needData: null
-      })
-    }
+        needData: null,
+      }),
+    },
   },
   components: {
-    postImageList,
-    avatar,
-    deleteIcon,
-    commentIcon,
-    bookmarksIcon,
-    locationIcon
-  }
+    postImageList: () => import("./postImageList"),
+    avatar: () => import("./avatar"),
+    deleteIcon: () => import("./svg/deleteIcon"),
+    commentIcon: () => import("./svg/commentIcon"),
+    bookmarksIcon: () => import("./svg/bookmarksIcon"),
+    locationIcon: () => import("./svg/locationIcon"),
+  },
+  computed: {
+    ...mapGetters(["PROFILE"]),
+    isSelf() {
+      return this.PROFILE ? this.PROFILE.id == this.post.author.id : false;
+    },
+  },
 };
 </script>
 
@@ -121,8 +126,8 @@ export default {
   color: #2b86f6;
 }
 
-.post > header .date {
-  margin-right: 25px;
+.post > header button.delete {
+  margin-left: 25px;
 }
 
 .post .author,
