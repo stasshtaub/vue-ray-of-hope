@@ -6,7 +6,7 @@
 </template>
 
 <script>
-import { mapGetters } from "vuex";
+import { mapGetters, mapActions } from "vuex";
 import axios from "axios";
 export default {
   name: "dialog",
@@ -20,16 +20,13 @@ export default {
     conn: null
   }),
   computed: {
-    ...mapGetters(["PROFILE"])
+    ...mapGetters(["PROFILE", "UNREAD"])
   },
   methods: {
+    ...mapActions(["SEND_WS_DATA"]),
     getMessages() {
       axios
-        .get("/api/dialog/", {
-          params: {
-            fromId: this.fromId
-          }
-        })
+        .get("/api/dialogs/" + this.fromId)
         .then(resp => {
           this.messages = resp.data.messages;
         })
@@ -37,37 +34,38 @@ export default {
           console.log(err);
         });
     },
-    sendData(data) {
-      if (!this.conn.readyState) {
-        setTimeout(() => {
-          this.sendData(data);
-        }, 100);
-      } else {
-        this.conn.send(JSON.stringify(data));
-      }
-    },
     sendMessage(text) {
+      this.messages.push({
+        fromUser: this.PROFILE.id,
+        toUser: this.$route.params.fromId,
+        text: text,
+        unread: true
+      });
+
       let data = {
         command: "message",
-        from: this.PROFILE.id,
-        to: this.$route.params.fromId,
-        message: text
+        fromId: this.PROFILE.id,
+        toId: this.$route.params.fromId,
+        msg: text
       };
-      this.sendData(data);
+      this.SEND_WS_DATA(data);
     }
   },
   mounted() {
     this.getMessages();
-
-    this.conn = new WebSocket("ws://ray-of-hope-build.loc:8091");
-    this.conn.onopen = function() {
-      console.log("Соединение установлено!");
-    };
-    this.conn.onmessage = function(e) {
-      let data = JSON.parse(e.data);
-      alert(data.message);
-    };
-    this.sendData({ command: "register", userId: this.PROFILE.id });
+  },
+  watch: {
+    UNREAD() {
+      const mess = this.UNREAD[this.UNREAD.length - 1];
+      if (mess.from.id == this.$route.params.fromId) {
+        this.messages.push({
+          fromUser: mess.from.id,
+          toUser: mess.to.id,
+          text: mess.text,
+          unread: false
+        });
+      }
+    }
   }
 };
 </script>

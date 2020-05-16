@@ -12,16 +12,27 @@
 </template>
 
 <script>
-import { mapGetters } from "vuex";
+import { mapGetters, mapActions } from "vuex";
 import userNavbar from "../components/userNavbar";
 export default {
   name: "user-layout",
   components: {
-    userNavbar,
+    userNavbar
   },
   computed: {
-    ...mapGetters(["PROFILE"]),
+    ...mapGetters(["PROFILE", "UNREAD"])
   },
+  methods: {
+    ...mapActions(["WS_INIT"])
+  },
+  watch: {
+    PROFILE() {
+      this.WS_INIT("ws://ray-of-hope-build.loc:8080");
+    },
+    UNREAD() {
+      //const mess = this.UNREAD[this.UNREAD.length - 1];
+    }
+  }
 };
 </script>
 

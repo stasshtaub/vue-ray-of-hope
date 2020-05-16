@@ -2,7 +2,7 @@
   <div class="dialogs-list">
     <dialogs-list-item
       v-for="dialog in dialogs"
-      :key="dialog.userFrom"
+      :key="dialog.id"
       :dialog="dialog"
     ></dialogs-list-item>
   </div>

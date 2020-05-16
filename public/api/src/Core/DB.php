@@ -7,7 +7,7 @@ class DB
     public $pdo;
     private $host = "localhost",
         $user = "root",
-        $password = "",
+        $password = "root",
         $db_name = "ray-of-hope",
         $opt = [
             \PDO::ATTR_ERRMODE => \PDO::ERRMODE_EXCEPTION,
@@ -17,8 +17,23 @@ class DB
 
     public function __construct()
     {
+        $this->init();
+    }
+
+    private function init()
+    {
         $dsn = "mysql:host=$this->host;dbname=$this->db_name;charset=UTF8";
         $this->pdo = new \PDO($dsn, $this->user, $this->password, $this->opt);
+    }
+
+    public function ping()
+    {
+        try {
+            $this->pdo->query('SELECT 1');
+        } catch (\PDOException $e) {
+            $this->init();
+        }
+        return true;
     }
 
     /**
