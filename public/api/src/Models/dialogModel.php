@@ -33,7 +33,7 @@ class dialogModel
 
     function getDialog($token, $interlocutorId)
     {
-        $query = "SELECT m.* FROM message m JOIN user u1 ON u1.id=m.fromUser JOIN user u2 ON u2.id=m.toUser WHERE $interlocutorId IN (u1.id, u2.id) AND '$token' IN (u1.token, u2.token)";
+        $query = "SELECT m.* FROM message m JOIN user u1 ON u1.id=m.fromUser JOIN user u2 ON u2.id=m.toUser WHERE $interlocutorId IN (u1.id, u2.id) AND '$token' IN (u1.token, u2.token) ORDER BY m.id";
         $messages = $this->DB->execute($query, null, true);
         return $messages;
     }

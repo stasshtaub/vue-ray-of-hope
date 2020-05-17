@@ -1,6 +1,6 @@
 <template>
   <div class="messages-view">
-    <router-view :key="$route.fullPath"/>
+    <router-view :key="$route.fullPath" />
   </div>
 </template>
 
@@ -9,3 +9,9 @@ export default {
   name: "messages-view",
 };
 </script>
+
+<style>
+.messages-view {
+  height: calc(100vh - 160px);
+}
+</style>

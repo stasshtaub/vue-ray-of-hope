@@ -1,6 +1,14 @@
 <template>
   <div class="messages-list">
-    <message v-for="message in messages" :key="message.id" :message="message"></message>
+    <vue-scroll ref="vs" :ops="scrollOps">
+      <div class="list-wrapper">
+        <message
+          v-for="message in messages"
+          :key="message.id"
+          :message="message"
+        />
+      </div>
+    </vue-scroll>
   </div>
 </template>
 
@@ -8,21 +16,60 @@
 export default {
   name: "messages-list",
   components: {
-    message: () => import("./message")
+    message: () => import("./message"),
   },
   props: {
     messages: {
       type: Array,
-      default: () => []
+      default: () => [],
+    },
+    pushed: {
+      type: Boolean,
+      default: false,
+    },
+  },
+  data: () => ({
+    scrollOps: {
+      rail: {
+        gutterOfSide: "0px",
+      },
+      bar: {
+        background: "gray",
+        width: "5px",
+        opacity: 0.2,
+      },
+    },
+  }),
+  methods: {
+    scrollToLast(speed = 0) {
+      //let scrollHeight = this.$refs.messagesList.scrollHeight;
+      this.$refs["vs"].scrollIntoView(".message:last-of-type", speed);
+
+      // this.$refs.messagesList.scrollTo({
+      //   top: scrollHeight,
+      //   behavior: behavior,
+      // });
+    },
+  },
+  updated() {
+    if (this.pushed) {
+      this.scrollToLast(300);
+    } else {
+      this.scrollToLast();
     }
-  }
+  },
 };
 </script>
 
 <style>
 .messages-list {
-  display: grid;
-  grid-gap: 20px;
-  padding: 20px;
+  padding: 20px 8px 20px 20px;
+  overflow: hidden;
+}
+.messages-list .message:not(:last-of-type) {
+  margin-bottom: 20px;
+}
+.list-wrapper{
+  padding-right: 12px;
 }
 </style>
