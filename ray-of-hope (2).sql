@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Хост: 127.0.0.1:3306
--- Время создания: Май 12 2020 г., 13:12
+-- Время создания: Май 17 2020 г., 09:53
 -- Версия сервера: 10.3.22-MariaDB-log
 -- Версия PHP: 7.3.16
 
@@ -1363,7 +1363,7 @@ CREATE TABLE `message` (
   `fromUser` int(11) UNSIGNED NOT NULL,
   `toUser` int(11) UNSIGNED NOT NULL,
   `onRead` tinyint(1) NOT NULL DEFAULT 0,
-  `text` text DEFAULT NULL
+  `text` text CHARACTER SET utf8 COLLATE utf8_unicode_ci DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
@@ -1371,8 +1371,14 @@ CREATE TABLE `message` (
 --
 
 INSERT INTO `message` (`id`, `fromUser`, `toUser`, `onRead`, `text`) VALUES
-(3, 18, 19, 0, 'text3'),
-(4, 19, 19, 0, 'text4');
+(1, 19, 17, 0, 'сообщение 1'),
+(2, 17, 19, 0, 'сообщение 2'),
+(3, 18, 17, 0, 'сообщение от 18 к 17'),
+(4, 19, 18, 0, 'От 19 к 18'),
+(5, 19, 17, 0, 'привет'),
+(6, 17, 19, 0, 'привет2'),
+(7, 19, 17, 0, 'ааааааааааааааааа'),
+(8, 17, 19, 0, 'бббббббббббббббббббббббббббббббббббббббббббббббббббббббббббббббббббббб');
 
 -- --------------------------------------------------------
 
@@ -1433,7 +1439,7 @@ CREATE TABLE `organization` (
 INSERT INTO `organization` (`user_id`, `INN`, `address`, `name`, `phone`, `city`, `activity`) VALUES
 (17, '4401080770', NULL, 'Организация3', NULL, NULL, NULL),
 (18, '7806298113', NULL, 'Организация2', NULL, NULL, NULL),
-(19, '3664069397', NULL, 'undefined', '89159999999', 525, 'Животные');
+(19, '3664069397', NULL, 'Новое название', '89159999999', 525, 'Животные');
 
 -- --------------------------------------------------------
 
@@ -1631,9 +1637,9 @@ CREATE TABLE `user` (
 --
 
 INSERT INTO `user` (`id`, `type_of_account`, `avatar`, `description`, `email`, `password`, `token`) VALUES
-(17, 'организация', NULL, NULL, 'sdfs222f@sdfsdf.re', '736723ddec5909fcea54fbbf0cd04154', 'jE6jMZsd'),
-(18, 'организация', NULL, NULL, 'sdfs222f@sdfsdf.re', '736723ddec5909fcea54fbbf0cd04154', 'nCUQG8yh'),
-(19, 'организация', '/content/organizations/19/avatar.jpg', 'какое-то описание', 'sdfs222f@sdfsdf.re', 'b034ac9e6e3ba954ec3f1b6b4dca3eab', 'U7SZXaim');
+(17, 'организация', NULL, NULL, 's@sdfsdf.re', '246092d7178bef8ac6948bbf4528752a', '8W2DO8w4'),
+(18, 'организация', NULL, NULL, 'sdfsf@sdfsdf.re', '736723ddec5909fcea54fbbf0cd04154', 'nCUQG8yh'),
+(19, 'организация', '/content/organizations/19/avatar.jpg', 'какое-то описание', 'sdfs222f@sdfsdf.re', '97afb7c3b3a4ab4a1add73d456bcdb66', '8cw2ZdjK');
 
 --
 -- Индексы сохранённых таблиц
@@ -1713,8 +1719,8 @@ ALTER TABLE `members`
 --
 ALTER TABLE `message`
   ADD PRIMARY KEY (`id`),
-  ADD KEY `fromUser` (`fromUser`),
-  ADD KEY `toUser` (`toUser`);
+  ADD KEY `toUser` (`toUser`),
+  ADD KEY `fromUser` (`fromUser`);
 
 --
 -- Индексы таблицы `need`
@@ -1810,7 +1816,7 @@ ALTER TABLE `image`
 -- AUTO_INCREMENT для таблицы `message`
 --
 ALTER TABLE `message`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT для таблицы `note`
