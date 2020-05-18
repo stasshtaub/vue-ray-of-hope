@@ -46,7 +46,6 @@ export default {
   font-weight: normal;
   font-style: normal;
 }
-
 @font-face {
   font-family: "SegoeLight";
   src: url("~@/assets/fonts/SegoeUI-Light.eot");
@@ -55,7 +54,6 @@ export default {
   font-weight: lighter;
   font-style: normal;
 }
-
 @font-face {
   font-family: "SegoeSB";
   src: url("~@/assets/fonts/SegoeUI-SemiBold.eot");
@@ -73,6 +71,9 @@ export default {
   font-family: "Segoe", sans-serif;
   font-size: 1rem;
   line-height: 1.35rem;
+}
+body {
+  overflow: hidden;
 }
 button {
   cursor: pointer;

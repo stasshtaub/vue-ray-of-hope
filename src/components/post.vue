@@ -7,7 +7,7 @@
       </router-link>
       <div class="wrp-right">
         <p class="date">{{ post.date }}</p>
-        <button class="delete" v-if="isSelf" @click="$emit('delete')">
+        <button class="icon delete" v-if="isSelf" @click="$emit('delete')">
           <delete-icon />
         </button>
       </div>
@@ -40,11 +40,11 @@
       </div>
     </div>
     <footer>
-      <a href class="comments">
+      <a href class="icon comments">
         <comment-icon />
         <p class="post_comments_count">0</p>
       </a>
-      <button class="bookmarks">
+      <button class="icon bookmarks">
         <bookmarks-icon />
       </button>
     </footer>

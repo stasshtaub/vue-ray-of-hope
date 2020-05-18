@@ -1,19 +1,19 @@
 <template>
   <div class="textbox">
-    <div class="textbox-title">{{name}}</div>
+    <div v-if="name" class="textbox-title">{{ name }}</div>
     <input
-      v-if="type=='input'"
+      v-if="type == 'input'"
       type="text"
       v-model="value"
-      :style="{width: `calc(${width} - 24px)`}"
+      :style="{ width: `calc(${width} - 24px)` }"
       :placeholder="placeholder"
       @input="$emit('input', value)"
     />
     <textarea
-      v-else-if="type=='textarea'"
+      v-else-if="type == 'textarea'"
       rows="3"
       v-model="value"
-      :style="{width: `calc(${width} - 24px)`}"
+      :style="{ width: `calc(${width} - 24px)` }"
       :placeholder="placeholder"
       @input="$emit('input', value)"
     ></textarea>
@@ -26,25 +26,25 @@ export default {
   props: {
     type: {
       type: String,
-      default: "input"
+      default: "input",
     },
     width: {
       type: String,
-      default: "100%"
+      default: "100%",
     },
     value: {
       type: String,
-      default: ""
+      default: "",
     },
     name: {
       type: String,
-      default: ""
+      default: "",
     },
     placeholder: {
       type: String,
-      default: ""
-    }
-  }
+      default: "",
+    },
+  },
 };
 </script>
 
@@ -66,7 +66,7 @@ export default {
   border-radius: 12px;
   border: 1px solid #d9d9d9;
 }
-textarea{
+textarea {
   resize: none;
 }
 </style>

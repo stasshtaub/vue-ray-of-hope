@@ -1,7 +1,7 @@
 <template>
   <div class="messages-list">
     <vue-scroll ref="vs" :ops="scrollOps">
-      <div class="list-wrapper">
+      <div class="scroll-wrapper">
         <message
           v-for="message in messages"
           :key="message.id"
@@ -42,13 +42,7 @@ export default {
   }),
   methods: {
     scrollToLast(speed = 0) {
-      //let scrollHeight = this.$refs.messagesList.scrollHeight;
       this.$refs["vs"].scrollIntoView(".message:last-of-type", speed);
-
-      // this.$refs.messagesList.scrollTo({
-      //   top: scrollHeight,
-      //   behavior: behavior,
-      // });
     },
   },
   updated() {
@@ -68,8 +62,5 @@ export default {
 }
 .messages-list .message:not(:last-of-type) {
   margin-bottom: 20px;
-}
-.list-wrapper{
-  padding-right: 12px;
 }
 </style>

@@ -4,9 +4,6 @@ import store from './vuex/store';
 
 import App from './App.vue'
 
-import { VueMasonryPlugin } from 'vue-masonry';
-Vue.use(VueMasonryPlugin);
-
 import vuescroll from 'vuescroll';
 Vue.use(vuescroll);
 

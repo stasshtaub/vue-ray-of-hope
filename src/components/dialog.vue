@@ -1,6 +1,6 @@
 <template>
   <div class="dialog frame">
-      <messages-list :pushed="pushed" :messages="messages" />
+    <messages-list :pushed="pushed" :messages="messages" />
     <message-box @send="sendMessage" />
   </div>
 </template>

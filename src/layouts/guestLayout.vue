@@ -1,7 +1,9 @@
 <template>
   <div class="guest-layout">
     <guest-navbar></guest-navbar>
-    <router-view></router-view>
+    <vue-scroll :ops="scrollOps">
+      <router-view></router-view>
+    </vue-scroll>
   </div>
 </template>
 
@@ -10,12 +12,15 @@ import guestNavbar from "../components/guestNavbar";
 export default {
   name: "guest-layout",
   components: {
-    guestNavbar
-  }
+    guestNavbar,
+  },
 };
 </script>
 
 <style>
+.guest-layout {
+  height: 100vh;
+}
 .guest-layout .container {
   position: relative;
   width: 1000px;

@@ -2,11 +2,13 @@
   <div class="user-layout">
     <template v-if="PROFILE">
       <user-navbar></user-navbar>
-      <div class="container">
-        <keep-alive>
-          <router-view></router-view>
-        </keep-alive>
-      </div>
+      <vue-scroll :ops="scrollOps">
+        <div class="container outer">
+          <keep-alive>
+            <router-view></router-view>
+          </keep-alive>
+        </div>
+      </vue-scroll>
     </template>
   </div>
 </template>
@@ -19,6 +21,20 @@ export default {
   components: {
     userNavbar,
   },
+
+  data: () => ({
+    scrollOps: {
+      rail: {
+        gutterOfSide: "5px",
+        gutterOfEnds: "5px",
+      },
+      bar: {
+        background: "gray",
+        width: "5px",
+        opacity: 0.4,
+      },
+    },
+  }),
   computed: {
     ...mapGetters(["PROFILE", "UNREAD"]),
   },
@@ -44,7 +60,8 @@ export default {
 
 <style>
 .user-layout {
-  min-height: 100vh;
+  padding-top: 60px;
+  height: calc(100vh - 60px);
   background-color: #f3f5f6;
 }
 .user-layout .container {
@@ -52,8 +69,9 @@ export default {
   max-width: calc(100vw - 40px);
   margin: 0 auto;
 }
-.user-layout > .container {
-  padding: 90px 0 30px 0;
+.user-layout .container.outer {
+  padding-top: 30px;
+  padding-bottom: 30px;
 }
 .frame {
   border-radius: 10px;
@@ -71,5 +89,18 @@ button.fill {
 }
 button.contur {
   color: #007bf5;
+}
+button.link {
+  border: none;
+  background: none;
+  color: #007bf5;
+}
+button.icon {
+  line-height: 0;
+  border: none;
+  background: none;
+}
+.scroll-wrapper {
+  padding-right: 12px;
 }
 </style>

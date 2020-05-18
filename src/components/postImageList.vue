@@ -5,7 +5,10 @@
         v-for="(img, i) in row"
         :key="i"
         :src="img.src"
-        :style="{width: img.width+'px', height: img.height+'px'}"
+        :style="{
+          width: img.width ? img.width + 'px' : 'auto',
+          height: img.height + 'px',
+        }"
       />
     </div>
   </div>
@@ -17,8 +20,8 @@ export default {
   props: {
     images: {
       type: Array,
-      default: () => []
-    }
+      default: () => [],
+    },
   },
   data: () => ({
     imagesWithSize: [],
@@ -27,18 +30,34 @@ export default {
     maxWidth: 0,
     targetHeight: 350,
     borderOffset: 10,
-    processedImages: []
+    processedImages: [],
   }),
   methods: {
+    pushImage(url) {
+      let img = new Image();
+      img.onload = () => {
+        this.imagesWithSize.push({
+          src: img.src,
+          width: img.width,
+          height: img.height,
+        });
+        if (this.imagesWithSize.length == this.images.length) {
+          window.addEventListener("resize", this.initialize);
+          this.initialize();
+        }
+      };
+      img.src = url;
+    },
     initialize() {
+      console.log("initialize");
       this.processedImages = [];
       this.maxWidth = this.$el.clientWidth;
 
-      this.imagesWithSize.forEach(image => {
+      this.imagesWithSize.forEach((image) => {
         var newImage = {
           width: image.width * (this.targetHeight / image.height),
           height: this.targetHeight,
-          src: image.src
+          src: image.src,
         };
 
         this.processedImages.push(newImage);
@@ -48,7 +67,7 @@ export default {
     draw() {
       var rows = this.buildRows();
 
-      rows.forEach(row => {
+      rows.forEach((row) => {
         this.fitImagesInRow(row);
       });
 
@@ -74,12 +93,6 @@ export default {
 
         imageCounter++;
       }
-      //   if (rows[rows.length - 1].length == 1) {
-      //     let lastImage = rows[rows.length - 1][0];
-      //     let k = this.maxWidth / lastImage.width;
-      //     lastImage.width *= k;
-      //     lastImage.height *= k;
-      //   }
       return rows;
     },
     fitImagesInRow(images) {
@@ -87,39 +100,38 @@ export default {
       let withoutBorders =
         this.maxWidth - this.borderOffset * (images.length - 1);
       let k = totalWidth / withoutBorders;
-      images.forEach(image => {
+      images.forEach((image) => {
         image.width /= k;
         image.height /= k;
+        if (image.height > this.targetHeight) {
+          let k2 = image.height / this.targetHeight;
+          image.height /= k2;
+          image.width /= k2;
+        }
       });
     },
     getCumulativeWidth(images) {
       var width = 0;
-      images.forEach(image => {
+      images.forEach((image) => {
         width += image.width;
       });
       return width;
-    }
+    },
+  },
+  watch: {
+    images() {
+      let image = this.images[this.images.length - 1];
+      this.pushImage(image.url);
+    },
   },
   mounted() {
-    this.images.forEach(image => {
-      let img = new Image();
-      img.onload = () => {
-        this.imagesWithSize.push({
-          src: img.src,
-          width: img.width,
-          height: img.height
-        });
-        if (this.imagesWithSize.length == this.images.length) {
-          window.addEventListener("resize", this.initialize);
-          this.initialize();
-        }
-      };
-      img.src = image.url;
+    this.images.forEach((image) => {
+      this.pushImage(image.url);
     });
   },
   beforeDestroy() {
     window.removeEventListener("resize", this.initialize);
-  }
+  },
 };
 </script>
 

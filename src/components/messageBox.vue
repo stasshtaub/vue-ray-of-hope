@@ -6,7 +6,7 @@
       placeholder="Сообщение..."
       v-model="text"
     />
-    <button type="submit">Отправить</button>
+    <button class="link" type="submit">Отправить</button>
   </form>
 </template>
 
@@ -38,9 +38,6 @@ export default {
   border: none;
 }
 .message-box > button {
-  border: none;
-  background: none;
-  color: #007bf5;
   padding: 0 20px;
 }
 </style>

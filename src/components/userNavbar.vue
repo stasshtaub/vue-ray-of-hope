@@ -2,12 +2,16 @@
   <div class="user-navbar">
     <div class="container">
       <router-link to="/" class="logo_link">
-        <img class="logo" src="/assets/img/logo_header2.png" alt="Луч надежды" />
+        <img
+          class="logo"
+          src="/assets/img/logo_header2.png"
+          alt="Луч надежды"
+        />
       </router-link>
       <nav class="nav-links">
         <ul>
           <li class="nav-link">
-            <router-link :to="'/organizations/'+PROFILE.id" id="nav-avatar">
+            <router-link :to="'/organizations/' + PROFILE.id" id="nav-avatar">
               <avatar :img="PROFILE.avatar || undefined" :size="40" />
             </router-link>
           </li>
@@ -27,7 +31,7 @@
             <router-link to="#">Любимые</router-link>
           </li>
           <li class="nav-link sub">
-            <a href="#" @click="showSub=!showSub">Ещё</a>
+            <a href="#" @click="showSub = !showSub">Ещё</a>
             <ul class="sub-menu frame" v-if="showSub">
               <router-link to="#">Кооментарии</router-link>
               <router-link to="#">Закладки</router-link>
@@ -49,14 +53,14 @@ import avatar from "./avatar";
 export default {
   name: "user-navbar",
   components: {
-    avatar
+    avatar,
   },
   data: () => ({
-    showSub: false
+    showSub: false,
   }),
   computed: {
-    ...mapGetters(["PROFILE"])
-  }
+    ...mapGetters(["PROFILE"]),
+  },
 };
 </script>
 
@@ -64,6 +68,7 @@ export default {
 .user-navbar {
   z-index: 2;
   position: fixed;
+  top: 0;
   width: 100vw;
   background-color: #fff;
   height: 60px;
