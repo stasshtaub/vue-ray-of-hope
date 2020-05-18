@@ -72,6 +72,7 @@ export default {
   padding: 0;
   font-family: "Segoe", sans-serif;
   font-size: 1rem;
+  line-height: 1.35rem;
 }
 button {
   cursor: pointer;

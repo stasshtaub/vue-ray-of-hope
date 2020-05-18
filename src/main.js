@@ -6,10 +6,12 @@ import App from './App.vue'
 
 import { VueMasonryPlugin } from 'vue-masonry';
 Vue.use(VueMasonryPlugin);
-import vuescroll from 'vuescroll';
 
-// You can set global config here.
+import vuescroll from 'vuescroll';
 Vue.use(vuescroll);
+
+import VueTextareaAutosize from "vue-textarea-autosize";
+Vue.use(VueTextareaAutosize);
 
 import axios from 'axios';
 const token = localStorage.getItem('user-token')
