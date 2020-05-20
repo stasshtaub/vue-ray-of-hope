@@ -8,7 +8,7 @@
         <ul>
           <li class="nav-link">
             <router-link :to="'/organizations/' + PROFILE.id" id="nav-avatar">
-              <avatar :img="PROFILE.avatar || undefined" :size="35" />
+              <avatar :img="PROFILE.avatar" :size="35" />
             </router-link>
           </li>
           <li class="nav-link">
@@ -49,14 +49,14 @@ export default {
   name: "user-navbar",
   components: {
     avatar: () => import("./avatar"),
-    logo: () => import("./svg/logo")
+    logo: () => import("./svg/logo"),
   },
   data: () => ({
-    showSub: false
+    showSub: false,
   }),
   computed: {
-    ...mapGetters(["PROFILE"])
-  }
+    ...mapGetters(["PROFILE"]),
+  },
 };
 </script>
 
@@ -71,10 +71,16 @@ export default {
   box-shadow: 0 0px 5px #d6d6d6;
 }
 .user-navbar .container {
+  position: relative;
+  width: 1700px !important;
   height: 100%;
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  justify-content: space-around;
+}
+a.logo_link {
+  position: absolute;
+  left: 0;
 }
 .nav-links > ul {
   display: flex;
@@ -82,7 +88,7 @@ export default {
   list-style-type: none;
 }
 .nav-links > ul > li:not(:first-of-type) {
-  margin-left: 35px;
+  margin-left: 50px;
 }
 .nav-link.sub {
   position: relative;
@@ -96,5 +102,13 @@ export default {
   left: 50%;
   transform: translate(-50%);
   grid-gap: 15px;
+}
+input.nav-search {
+  right: 0;
+  position: absolute;
+  padding: 6px 12px;
+  border-radius: 12px;
+  border: none;
+  background: #f3f5f6;
 }
 </style>

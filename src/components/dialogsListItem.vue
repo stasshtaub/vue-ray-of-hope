@@ -1,7 +1,7 @@
 <template>
   <div class="dialogs-list-item frame">
     <router-link :to="'/messages/'+dialog.id">
-      <avatar :img="dialog.interlocutor.avatar ? dialog.interlocutor.avatar : undefined" />
+      <avatar :img="dialog.interlocutor.avatar" />
       <div class="info">
         <p class="name">{{dialog.interlocutor.name}}</p>
       </div>

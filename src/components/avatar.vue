@@ -1,6 +1,6 @@
 <template>
-  <div class="avatar" :style="{width: size+'px', height: size+'px'}">
-    <img :src="img" alt />
+  <div class="avatar" :style="style">
+    <img :src="img || require('@/assets/img/noavatar.jpg')" alt />
   </div>
 </template>
 
@@ -10,13 +10,25 @@ export default {
   props: {
     img: {
       type: String,
-      default: require("@/assets/img/noavatar.jpg")
+      default: null,
     },
     size: {
       type: Int8Array,
-      default: 50
-    }
-  }
+      default: 50,
+    },
+  },
+  computed: {
+    style() {
+      let style = {
+        width: this.size + "px",
+        height: this.size + "px",
+      };
+      if (!this.img) {
+        style.border = "1px solid #b7b7b7";
+      }
+      return style;
+    },
+  },
 };
 </script>
 

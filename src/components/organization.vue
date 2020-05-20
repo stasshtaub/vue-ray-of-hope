@@ -2,7 +2,7 @@
   <div class="organization frame">
     <header>
       <router-link :to="'/organizations/'+org.id">
-        <avatar :img="org.avatar || undefined" :size="60" />
+        <avatar :img="org.avatar" :size="60" />
       </router-link>
       <div class="info">
         <router-link :to="'/organizations/'+org.id">

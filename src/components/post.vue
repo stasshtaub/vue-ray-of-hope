@@ -2,7 +2,7 @@
   <article class="post frame">
     <header>
       <router-link class="author" :to="'/organizations/' + post.author.id">
-        <avatar :img="post.author.avatar || undefined" />
+        <avatar :img="post.author.avatar" />
         <p class="name">{{ post.author.name }}</p>
       </router-link>
       <div class="wrp-right">

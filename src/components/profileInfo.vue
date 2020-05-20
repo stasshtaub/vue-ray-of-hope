@@ -2,7 +2,7 @@
   <div class="profile-info frame">
     <div class="info">
       <div class="avatar-name-activity">
-        <avatar :img="userData.avatar || undefined" :size="120" />
+        <avatar :img="userData.avatar" :size="120" />
 
         <div class="name-activity">
           <h1 class="name">{{userData.name}}</h1>
