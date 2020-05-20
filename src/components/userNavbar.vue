@@ -2,17 +2,13 @@
   <div class="user-navbar">
     <div class="container">
       <router-link to="/" class="logo_link">
-        <img
-          class="logo"
-          src="/assets/img/logo_header2.png"
-          alt="Луч надежды"
-        />
+        <logo />
       </router-link>
       <nav class="nav-links">
         <ul>
           <li class="nav-link">
             <router-link :to="'/organizations/' + PROFILE.id" id="nav-avatar">
-              <avatar :img="PROFILE.avatar || undefined" :size="40" />
+              <avatar :img="PROFILE.avatar || undefined" :size="35" />
             </router-link>
           </li>
           <li class="nav-link">
@@ -49,18 +45,18 @@
 
 <script>
 import { mapGetters } from "vuex";
-import avatar from "./avatar";
 export default {
   name: "user-navbar",
   components: {
-    avatar,
+    avatar: () => import("./avatar"),
+    logo: () => import("./svg/logo")
   },
   data: () => ({
-    showSub: false,
+    showSub: false
   }),
   computed: {
-    ...mapGetters(["PROFILE"]),
-  },
+    ...mapGetters(["PROFILE"])
+  }
 };
 </script>
 

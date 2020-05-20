@@ -10,11 +10,11 @@ import axios from "axios";
 export default {
   name: "feed-view",
   components: {
-    postsList: () => import("../components/postsList"),
+    postsList: () => import("../components/postsList")
   },
   data: () => ({
     postsType: null,
-    posts: [],
+    posts: []
   }),
   methods: {
     changeType(type) {
@@ -25,27 +25,26 @@ export default {
       axios
         .get("/api/feed", {
           params: {
-            type: this.postsType,
-          },
+            type: this.postsType
+          }
         })
-        .then((resp) => {
+        .then(resp => {
           this.posts = resp.data.posts;
         })
-        .catch((err) => {
+        .catch(err => {
           console.log(err);
         });
-    },
+    }
   },
   mounted() {
     this.getFeed();
-  },
+  }
 };
 </script>
 
 <style>
 .feed-view {
-  display: grid;
-  grid-template-columns: 500px;
-  grid-gap: 20px;
+  width: 762.5px;
+  margin: 0 auto;
 }
 </style>

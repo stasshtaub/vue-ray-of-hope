@@ -3,8 +3,9 @@
 namespace Models;
 
 use Core\DB;
+use Core\baseUser;
 
-class organizationModel
+class organizationModel extends baseUser
 {
     private $DB;
     function __construct()
@@ -81,16 +82,5 @@ class organizationModel
             $this->DB->execute($query, $orgTable);
         }
         return $id;
-    }
-
-    private function idFromToken($token)
-    {
-        $query = "SELECT id FROM user WHERE token='$token'";
-        $org = $this->DB->execute($query);
-        if (!empty($org["id"])) {
-            return $org["id"];
-        } else {
-            throw new \Exception("BAD_TOKEN", 401);
-        }
     }
 }

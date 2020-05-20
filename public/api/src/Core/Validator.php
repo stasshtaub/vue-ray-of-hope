@@ -38,9 +38,9 @@ class Validator
         }
         return $errors;
     }
+
     /** Проверяет валидность инн организации
      * @param integer $inn
-     * 
      * @return void
      */
     private static function validateInn(string $inn)
@@ -70,7 +70,7 @@ class Validator
         return false;
     }
 
-    static function validateOrgProdile(array $profileData)
+    static function validateOrgProfile(array $profileData)
     {
         $errors = [];
         foreach ($profileData as $key => $value) {
@@ -117,5 +117,15 @@ class Validator
         $query = "SELECT id FROM $table WHERE id=$id";
         $city = $DB->execute($query, null, true);
         return boolval(count($city));
+    }
+
+    public static function TokenAndIdMatch($token, $id)
+    {
+        require_once __DIR__ . "/DB.php";
+        $DB = new DB();
+
+        $query = "SELECT id FROM user WHERE token='$token' AND id=$id";
+        $user = $DB->execute($query, null, true);
+        return boolval(count($user));
     }
 }

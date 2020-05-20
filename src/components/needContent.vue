@@ -19,26 +19,32 @@
 export default {
   name: "need-content",
   components: {
-    textbox: () => import("./textbox"),
+    textbox: () => import("./textbox")
   },
   props: {
     needCount: {
       type: Int8Array,
-      default: null,
+      default: null
     },
     collectedCount: {
       type: Int8Array,
-      default: null,
-    },
+      default: null
+    }
   },
   watch: {
     needCount() {
-      this.$emit("changeNeedCount", this.needCount);
+      this.$emit("changeEvent", {
+        property: "needCount",
+        value: this.needCount
+      });
     },
     collectedCount() {
-      this.$emit("changeCollectedCount", this.collectedCount);
-    },
-  },
+      this.$emit("changeEvent", {
+        property: "collectedCount",
+        value: this.collectedCount
+      });
+    }
+  }
 };
 </script>
 

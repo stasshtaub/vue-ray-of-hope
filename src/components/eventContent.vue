@@ -1,19 +1,27 @@
 <template>
   <div class="event-content">
-    <datepicker
-      v-model="startDate"
-      name="start-date"
-      :placeholder="'Дата начала'"
-      :language="ru"
-      @input="$emit('changeStartDate', startDate)"
-    ></datepicker>
-    <datepicker
-      v-model="endDate"
-      name="end-date"
-      :placeholder="'Дата завершения'"
-      :language="ru"
-      @input="$emit('changeEndDate', endDate)"
-    ></datepicker>
+    <textbox
+      v-model="location"
+      :placeholder="'Место'"
+      :width="'100%'"
+      @input="$emit('changeEvent', {property: 'location', value: location})"
+    />
+    <div class="event-dates">
+      <datepicker
+        v-model="startDate"
+        name="start-date"
+        :placeholder="'Дата начала'"
+        :language="ru"
+        @input="$emit('changeEvent', {property: 'startDate', value: startDate})"
+      ></datepicker>
+      <datepicker
+        v-model="endDate"
+        name="end-date"
+        :placeholder="'Дата завершения'"
+        :language="ru"
+        @input="$emit('changeEvent', {property: 'endDate', value: endDate})"
+      ></datepicker>
+    </div>
   </div>
 </template>
 
@@ -23,39 +31,47 @@ export default {
   name: "event-content",
   components: {
     datepicker: () => import("vuejs-datepicker"),
+    textbox: () => import("./textbox")
   },
   props: {
+    location: {
+      type: String,
+      default: ""
+    },
     startDate: {
       type: Date,
-      default: null,
+      default: null
     },
     endDate: {
       type: Date,
-      default: null,
-    },
+      default: null
+    }
   },
   data: () => ({
-    ru: ru,
-  }),
+    ru: ru
+  })
 };
 </script>
 
 <style>
-.event-content > *:not(:last-of-type) {
+.event-content > .event-dates {
+  margin-top: 20px;
+}
+.event-content > .event-dates > *:not(:last-of-type) {
   margin-right: 20px;
 }
 input[name="start-date"],
 input[name="end-date"] {
-  border-radius: 10px;
-  border: 1px solid #b5b5b5;
-  padding: 5px 10px;
+  padding: 8px 12px;
+  border-radius: 12px;
+  border: 1px solid #d9d9d9;
   cursor: pointer;
 }
 .vdp-datepicker {
   display: inline-block;
 }
 .vdp-datepicker__calendar {
-  border-radius: 10px;
+  border-radius: 12px;
   padding: 15px;
   top: calc(100% + 10px);
   transform: translateX(-50%);

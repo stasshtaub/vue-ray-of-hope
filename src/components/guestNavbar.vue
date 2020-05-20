@@ -4,12 +4,8 @@
       <router-link to="/">
         <svg
           class="logo"
-          xmlns="http://www.w3.org/2000/svg"
-          xml:space="preserve"
-          version="1.1"
           style="shape-rendering:geometricPrecision; text-rendering:geometricPrecision; image-rendering:optimizeQuality; fill-rule:evenodd; clip-rule:evenodd"
           viewBox="0 0 1999 1466"
-          xmlns:xlink="http://www.w3.org/1999/xlink"
         >
           <path
             class="hand"

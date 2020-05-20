@@ -13,11 +13,72 @@ class postModel
         $this->DB = new DB();
     }
 
+    function newPost(array $postData)
+    {
+        $query = "INSERT INTO note (author, type, description) VALUE (:author, :type, :description)";
+        $params = [
+            "author" => $postData['oid'],
+            "type" => $postData['type'],
+            "description" => $postData['text']
+        ];
+        $this->DB->execute($query, $params);
+        $noteId = $this->DB->pdo->lastInsertId();
+
+        if (isset($postData['images'])) {
+            $this->uploadImages($postData['oid'], $noteId, $postData['images']);
+        }
+
+        switch ($postData['type']) {
+            case 'event':
+                $query = "INSERT INTO event (note, start_date, end_date, address) VALUE (:note, :start_date, :end_date, :address)";
+                $startDate = new \DateTime($postData['startDate']);
+                $endDate = new \DateTime($postData['endDate']);
+                $params = [
+                    "note" => $noteId,
+                    "start_date" => $startDate->format('Y-m-d'),
+                    "end_date" => $endDate->format('Y-m-d'),
+                    "address" => $postData['location']
+                ];
+                $this->DB->execute($query, $params);
+                break;
+            case 'need':
+                $query = "INSERT INTO need (note, need_count, collected_count) VALUE (:note, :need_count, :collected_count)";
+                $params = [
+                    "note" => $noteId,
+                    "need_count" => $postData['needCount'],
+                    "collected_count" => $postData['collectedCount']
+                ];
+                $this->DB->execute($query, $params);
+                break;
+        }
+        return $noteId;
+    }
+
+    private function uploadImages(int $oid, int $noteId, array $images)
+    {
+        $directory = "/content/organizations/$oid/posts/$noteId/images";
+        $fullDirectory = ROOT_DIR . "/..$directory";
+        if (!file_exists($fullDirectory)) {
+            $createDirResult = mkdir($fullDirectory, 0777, true);
+        }
+        foreach ($images['name'] as $i => $fileName) {
+            $path = "$fullDirectory/$fileName";
+            if (move_uploaded_file($images['tmp_name'][$i], $path)) {
+                $query = "INSERT INTO image (note, url) VALUE (:note, :url)";
+                $params = [
+                    "note" => $noteId,
+                    "url" => "$directory/$fileName",
+                ];
+                $this->DB->execute($query, $params);
+            }
+        }
+    }
+
     function getOrganizationPosts($oid, $type)
     {
-        $query = "SELECT note.id, note.author authorId, note.publication_date 'date', note.description 'text', type_note.name 'type', event.start_date 'startDate', event.end_date 'endDate', event.address 'location', need.need_items 'needItems', need.need_count 'needCount', need.collected_count 'collectedCount', user.avatar, organization.name FROM note INNER JOIN type_note ON note.type=type_note.id LEFT JOIN event ON note.id=event.note LEFT JOIN need ON note.id=need.note INNER JOIN user ON user.id=note.author INNER JOIN organization ON user.id=organization.user_id WHERE note.author=$oid";
+        $query = "SELECT note.id, note.author authorId, note.publication_date 'date', note.description 'text', type, event.start_date 'startDate', event.end_date 'endDate', event.address 'location', need.need_items 'needItems', need.need_count 'needCount', need.collected_count 'collectedCount', user.avatar, organization.name FROM note LEFT JOIN event ON note.id=event.note LEFT JOIN need ON note.id=need.note INNER JOIN user ON user.id=note.author INNER JOIN organization ON user.id=organization.user_id WHERE note.author=$oid ORDER BY note.id DESC";
         if (!is_null($type)) {
-            $query .= " AND type_note.name='$type'";
+            $query .= " AND type='$type'";
         }
         $posts = $this->DB->execute($query, null, true);
         foreach ($posts as $key => &$post) {
@@ -30,7 +91,7 @@ class postModel
     }
     function getOrganizationPost($oid, $pid)
     {
-        $query = "SELECT note.id, note.author authorId, note.publication_date 'date', note.description 'text', type_note.name 'type', event.start_date 'startDate', event.end_date 'endDate', event.address 'location', need.need_items 'needItems', need.need_count 'needCount', need.collected_count 'collectedCount', user.avatar, organization.name FROM note INNER JOIN type_note ON note.type=type_note.id LEFT JOIN event ON note.id=event.note LEFT JOIN need ON note.id=need.note INNER JOIN user ON user.id=note.author INNER JOIN organization ON user.id=organization.user_id WHERE note.author=$oid AND note.id=$pid";
+        $query = "SELECT note.id, note.author authorId, note.publication_date 'date', note.description 'text', type, event.start_date 'startDate', event.end_date 'endDate', event.address 'location', need.need_items 'needItems', need.need_count 'needCount', need.collected_count 'collectedCount', user.avatar, organization.name FROM note LEFT JOIN event ON note.id=event.note LEFT JOIN need ON note.id=need.note INNER JOIN user ON user.id=note.author INNER JOIN organization ON user.id=organization.user_id WHERE note.author=$oid AND note.id=$pid";
         $post = $this->DB->execute($query);
         if (empty($post)) {
             throw new Exception("NOT_FOUND", 404);
@@ -44,7 +105,7 @@ class postModel
 
     function getFeed($filters)
     {
-        $query = "SELECT note.id, note.author authorId, note.publication_date 'date', note.description 'text', type_note.name 'type', event.start_date 'startDate', event.end_date 'endDate', event.address 'location', need.need_items 'needItems', need.need_count 'needCount', need.collected_count 'collectedCount', user.avatar, organization.name FROM note INNER JOIN type_note ON note.type=type_note.id LEFT JOIN event ON note.id=event.note LEFT JOIN need ON note.id=need.note INNER JOIN user ON user.id=note.author INNER JOIN organization ON user.id=organization.user_id";
+        $query = "SELECT note.id, note.author authorId, note.publication_date 'date', note.description 'text', type, event.start_date 'startDate', event.end_date 'endDate', event.address 'location', need.need_items 'needItems', need.need_count 'needCount', need.collected_count 'collectedCount', user.avatar, organization.name FROM note LEFT JOIN event ON note.id=event.note LEFT JOIN need ON note.id=need.note INNER JOIN user ON user.id=note.author INNER JOIN organization ON user.id=organization.user_id";
         if (!empty($filters)) {
             $firstFilter = array_shift($filters);
             $firstKey = $firstFilter["dbName"];
@@ -77,9 +138,9 @@ class postModel
         return $this->DB->execute($query, $params);
     }
 
-    function checkOwner($token, $postId)
+    function checkOwner($token, $noteId)
     {
-        $query = "SELECT CASE WHEN user.token='$token' THEN true ELSE false END isOwhner FROM note INNER JOIN user ON note.author=user.id WHERE note.id=$postId";
+        $query = "SELECT CASE WHEN user.token='$token' THEN true ELSE false END isOwhner FROM note INNER JOIN user ON note.author=user.id WHERE note.id=$noteId";
         return boolval($this->DB->execute($query)['isOwhner']);
     }
 

@@ -1,10 +1,6 @@
 <template>
   <div class="switch-posts frame">
-    <label
-      v-if="withAll"
-      class="label-all"
-      :class="{ selected: selected == null }"
-    >
+    <label v-if="withAll" class="label-all" :class="{ selected: selected == null }">
       Все записи
       <input
         name="typepost"
@@ -15,11 +11,7 @@
         checked
       />
     </label>
-    <label
-      v-for="type in types"
-      :key="type.value"
-      :class="{ selected: type.value == selected }"
-    >
+    <label v-for="type in types" :key="type.value" :class="{ selected: type.value == selected }">
       {{ type.name }}
       <input
         :style="{ marginLeft: withAll ? '15px' : '' }"
@@ -39,31 +31,31 @@ export default {
   props: {
     withAll: {
       type: Boolean,
-      default: true,
-    },
+      default: true
+    }
   },
   data: () => ({
     selected: null,
     types: [
       {
         name: "Нужда",
-        value: "need",
+        value: "need"
       },
       {
         name: "Мероприятие",
-        value: "event",
+        value: "event"
       },
       {
         name: "Событие",
-        value: "note",
-      },
-    ],
+        value: "note"
+      }
+    ]
   }),
   mounted() {
-    if (this.withAll) {
-      this.selected = this.types[0];
+    if (!this.withAll) {
+      this.selected = this.types[0].value;
     }
-  },
+  }
 };
 </script>
 

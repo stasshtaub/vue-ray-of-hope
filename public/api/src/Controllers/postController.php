@@ -3,8 +3,10 @@
 namespace Controllers;
 
 use Models\postModel;
+use Core\baseUser;
+use Core\Validator;
 
-class postController
+class postController extends baseUser
 {
     private $model;
     function __construct()
@@ -23,11 +25,27 @@ class postController
         echo json_encode($result, JSON_PRETTY_PRINT);
     }
 
+    function newPost($postData)
+    {
+        $headers = getallheaders();
+        if (!empty($headers["authorization"]) || !empty($headers["Authorization"])) {
+            //validation
+            $token = !empty($headers["authorization"]) ? $headers["authorization"] : $headers["Authorization"];
+            if (!Validator::TokenAndIdMatch($token, $postData['oid'])) {
+                throw new \Exception("BAD_TOKEN", 401);
+            }
+            $result["id"] = $this->model->newPost($postData);
+            echo json_encode($result, JSON_PRETTY_PRINT);
+        } else {
+            throw new \Exception("BAD_TOKEN", 401);
+        }
+    }
+
     function getFeed($filters = null)
     {
         $allowedFilters = [
             "type" => [
-                "dbName" => "type_note.name",
+                "dbName" => "type",
                 "allowed" => ["note", "need", "event"]
             ],
             "city" => [

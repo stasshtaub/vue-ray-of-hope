@@ -29,10 +29,9 @@ class organizationController
 
     function edit(array $profileData)
     {
-        // var_dump($profileData);
         $headers = getallheaders();
         if (!empty($headers["authorization"]) || !empty($headers["Authorization"])) {
-            $errors = Validator::validateOrgProdile($profileData);
+            $errors = Validator::validateOrgProfile($profileData);
             if (!empty($errors)) {
                 $result["status"] = "VALIDATE_ERROR";
                 $result["errors"] = $errors;

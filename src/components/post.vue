@@ -6,7 +6,7 @@
         <p class="name">{{ post.author.name }}</p>
       </router-link>
       <div class="wrp-right">
-        <p class="date">{{ post.date }}</p>
+        <p class="date">{{ dateFormat(post.date) }}</p>
         <button class="icon delete" v-if="isSelf" @click="$emit('delete')">
           <delete-icon />
         </button>
@@ -14,22 +14,25 @@
     </header>
     <div class="content">
       <p class="post_text">{{ post.text }}</p>
-      <post-image-list
-        v-if="post.images.length"
-        :images="post.images"
-      ></post-image-list>
+      <post-image-list v-if="post.images.length" :images="post.images"></post-image-list>
       <div v-if="post.eventData" class="location_date">
         <location-icon :width="20" />
         <div class="location_date_wrapper">
-          <p class="date">{{ post.eventData.date }}</p>
+          <div class="date">
+            <span class="start-date">{{ eventDateFormat(post.eventData.startDate) }}</span>
+            <span class="date-delimiter">&nbsp;-&nbsp;</span>
+            <span class="end-date">{{ eventDateFormat(post.eventData.endDate) }}</span>
+          </div>
           <p class="location">{{ post.eventData.location }}</p>
         </div>
       </div>
       <div v-if="post.needData" class="progress">
         <div class="count">
-          <span class="collected_count">{{
+          <span class="collected_count">
+            {{
             post.needData.collectedCount
-          }}</span>
+            }}
+          </span>
           <span class="need_count">{{ post.needData.needCount }}</span>
         </div>
         <div class="bar">
@@ -66,24 +69,56 @@ export default {
         images: [],
         date: null,
         eventData: null,
-        needData: null,
-      }),
-    },
+        needData: null
+      })
+    }
   },
+  data: () => ({
+    month: [
+      "января",
+      "февраля",
+      "марта",
+      "апреля",
+      "мая",
+      "июня",
+      "июля",
+      "августа",
+      "сентября",
+      "октября",
+      "ноября",
+      "декабря"
+    ]
+  }),
   components: {
     postImageList: () => import("./postImageList"),
     avatar: () => import("./avatar"),
     deleteIcon: () => import("./svg/deleteIcon"),
     commentIcon: () => import("./svg/commentIcon"),
     bookmarksIcon: () => import("./svg/bookmarksIcon"),
-    locationIcon: () => import("./svg/locationIcon"),
+    locationIcon: () => import("./svg/locationIcon")
   },
   computed: {
     ...mapGetters(["PROFILE"]),
     isSelf() {
       return this.PROFILE ? this.PROFILE.id == this.post.author.id : false;
-    },
+    }
   },
+  methods: {
+    dateFormat(dateStr) {
+      let date = new Date(dateStr);
+      let hours = date.getHours() < 10 ? "0" : "";
+      hours += date.getHours();
+      let minutes = date.getMinutes() < 10 ? "0" : "";
+      minutes += date.getMinutes();
+      return `${date.getDate()} ${
+        this.month[date.getMonth()]
+      } в ${hours}:${minutes}`;
+    },
+    eventDateFormat(dateStr) {
+      let date = new Date(dateStr);
+      return `${date.getDate()} ${this.month[date.getMonth()]}`;
+    }
+  }
 };
 </script>
 
@@ -142,7 +177,7 @@ export default {
   margin-left: 15px;
 }
 
-.location_date_wrapper > .date {
+.location_date_wrapper .date * {
   color: #2b86f6;
 }
 

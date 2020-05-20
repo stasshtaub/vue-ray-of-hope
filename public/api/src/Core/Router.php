@@ -14,6 +14,11 @@ class Router
                 "method" => "loginOrganization"
 
             ]);
+            $r->addRoute('POST', '/api/organizations/{oid:\d+}/posts', [
+                "controllerName" => "Controllers\\postController",
+                "method" => "newPost",
+                "arrParams" => true
+            ]);
             $r->addRoute('POST', '/api/edit', [
                 "controllerName" => "Controllers\\organizationController",
                 "method" => "edit",

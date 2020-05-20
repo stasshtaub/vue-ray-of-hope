@@ -1,5 +1,5 @@
 <template>
-  <div class="mask">
+  <div class="mask" @click.self="$emit('close')">
     <div class="create-post frame">
       <header>
         <p>Новая запись</p>
@@ -17,22 +17,20 @@
             v-if="type == 'event'"
             :startDate="event.startDate"
             :endDate="event.endDate"
-            @changeStartDate="changeStartDate"
-            @changeEndDate="changeEndDate"
+            @changeEvent="changeEvent"
           />
           <need-content
             v-if="type == 'need'"
             :needCount="need.needCount"
             :collectedCount="need.collectedCount"
-            @changeNeedCount="changeNeedCount"
-            @changeCollectedCount="changeCollectedCount"
+            @changeNeed="changeNeed"
           />
           <div class="controls">
             <label class="uploadImages">
               <attach-img-icon />
               <input type="file" multiple @input="inputImages" />
             </label>
-            <button class="link">Отправить</button>
+            <button class="link" @click="send">Отправить</button>
           </div>
         </div>
       </section>
@@ -41,6 +39,8 @@
 </template>
 
 <script>
+import axios from "axios";
+import { mapGetters } from "vuex";
 export default {
   name: "create-post",
   components: {
@@ -51,28 +51,92 @@ export default {
     needContent: () => import("./needContent"),
 
     attachImgIcon: () => import("./svg/attachImgIcon"),
-    deleteIcon: () => import("./svg/deleteIcon"),
+    deleteIcon: () => import("./svg/deleteIcon")
   },
   data: () => ({
     type: "note",
     text: "",
     images: [],
+    uploadedFiles: [],
     event: {
       location: "",
       startDate: null,
-      endDate: null,
+      endDate: null
     },
     need: {
       needCount: null,
-      collectedCount: null,
-    },
+      collectedCount: null
+    }
   }),
+  computed: {
+    ...mapGetters(["PROFILE"])
+  },
   methods: {
+    emitCreatedPost(id) {
+      let post = {
+        id: id,
+        author: this.PROFILE,
+        text: this.text,
+        images: this.images,
+        date: new Date()
+      };
+
+      switch (this.type) {
+        case "need":
+          post.needData = this.need;
+          break;
+        case "event":
+          post.eventData = this.event;
+          break;
+      }
+
+      this.$emit("createdPost", post);
+    },
+    send() {
+      axios
+        .post(
+          `/api/organizations/${this.PROFILE.id}/posts`,
+          this.generateFormData()
+        )
+        .then(resp => {
+          this.emitCreatedPost(resp.data.id);
+        })
+        .catch(err => {
+          console.log(err.data);
+          console.log(err.message);
+        });
+    },
+    generateFormData() {
+      let fd = new FormData();
+      fd.append("type", this.type);
+      fd.append("text", this.text);
+      this.uploadedFiles.forEach(file => {
+        fd.append("images[]", file);
+      });
+      switch (this.type) {
+        case "event":
+          fd.append("location", this.event.location);
+          fd.append(
+            "startDate",
+            "@" + Math.round(this.event.startDate.getTime() / 1000)
+          );
+          fd.append(
+            "endDate",
+            "@" + Math.round(this.event.endDate.getTime() / 1000)
+          );
+          break;
+        case "need":
+          fd.append("needCount", this.need.needCount);
+          fd.append("collectedCount", this.need.collectedCount);
+          break;
+      }
+      return fd;
+    },
     inputImages(e) {
       let files = e.target.files;
-      files.forEach((file) => {
+      files.forEach(file => {
+        this.uploadedFiles.push(file);
         var reader = new FileReader();
-
         reader.onloadend = () => {
           this.images.push({ url: reader.result });
         };
@@ -83,18 +147,18 @@ export default {
     changeType(type) {
       this.type = type;
     },
-    changeStartDate(date) {
-      this.event.startDate = date;
+    changeEvent(data) {
+      this.event[data.property] = data.value;
     },
-    changeEndDate(date) {
-      this.event.endDate = date;
+    changeNeed(data) {
+      this.need[data.property] = data.value;
     },
     changeNeedCount(count) {
       this.need.needCount = count;
     },
     changeCollectedCount(count) {
       this.need.collectedCount = count;
-    },
+    }
   },
   created() {
     document
@@ -105,7 +169,7 @@ export default {
     document
       .querySelector(".user-layout .container.outer")
       .setAttribute("style", "");
-  },
+  }
 };
 </script>
 
