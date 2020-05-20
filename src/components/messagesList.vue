@@ -2,7 +2,11 @@
   <div class="messages-list">
     <vue-scroll ref="vs" :ops="scrollOps">
       <div class="scroll-wrapper">
-        <message v-for="message in messages" :key="message.id" :message="message" />
+        <message
+          v-for="message in messages"
+          :key="message.id"
+          :message="message"
+        />
       </div>
     </vue-scroll>
   </div>
@@ -12,35 +16,35 @@
 export default {
   name: "messages-list",
   components: {
-    message: () => import("./message")
+    message: () => import("./message"),
   },
   props: {
     messages: {
       type: Array,
-      default: () => []
+      default: () => [],
     },
     pushed: {
       type: Boolean,
-      default: false
-    }
+      default: false,
+    },
   },
   data: () => ({
     scrollOps: {
       rail: {
         gutterOfEnds: "20px",
-        gutterOfSide: "0px"
+        gutterOfSide: "0px",
       },
       bar: {
         background: "gray",
         width: "5px",
-        opacity: 0.2
-      }
-    }
+        opacity: 0.2,
+      },
+    },
   }),
   methods: {
     scrollToLast(speed = 0) {
       this.$refs["vs"].scrollIntoView(".message:last-of-type", speed);
-    }
+    },
   },
   updated() {
     if (this.pushed) {
@@ -48,14 +52,21 @@ export default {
     } else {
       this.scrollToLast();
     }
-  }
+  },
 };
 </script>
 
 <style>
+.__view {
+  display: flex;
+}
 .messages-list {
   padding: 0 8px 0 20px;
   overflow: hidden;
+}
+.messages-list .scroll-wrapper {
+  width: 100%;
+  margin-top: auto;
 }
 .messages-list .message:first-of-type {
   margin-top: 20px;

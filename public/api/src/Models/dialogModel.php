@@ -14,7 +14,7 @@ class dialogModel
 
     function getDialogs($token)
     {
-        $query = "SELECT m2.unread, CASE WHEN o.name IS NOT NULL THEN o.name ELSE c.name END 'interlocutorName', interlocutor.id interlocutorId, interlocutor.avatar interlocutorAvatar FROM message m JOIN user u1 ON u1.id=m.fromUser JOIN user u2 ON u2.id=m.toUser JOIN user interlocutor ON interlocutor.id IN (u1.id, u2.id) AND interlocutor.token<>'$token' LEFT JOIN organization o ON interlocutor.id=o.user_id LEFT JOIN civilian c ON interlocutor.id=c.user JOIN ( SELECT fromUser, MAX(id) id, COUNT(case when onRead=0 then 1 else null end) unread FROM message GROUP BY fromUser ) m2 ON m.fromUser=m2.fromUser AND m.id=m2.id JOIN user u3 ON u3.id=interlocutor.id WHERE '$token' IN (u1.token, u2.token) GROUP BY interlocutor.id";
+        $query = "SELECT m2.unread, CASE WHEN o.name IS NOT NULL THEN o.name ELSE c.name END 'interlocutorName', interlocutor.id interlocutorId, interlocutor.avatar interlocutorAvatar FROM message m JOIN user u1 ON u1.id=m.fromUser JOIN user u2 ON u2.id=m.toUser JOIN user interlocutor ON interlocutor.id IN (u1.id, u2.id) AND interlocutor.token<>'$token' LEFT JOIN organization o ON interlocutor.id=o.user_id LEFT JOIN civilian c ON interlocutor.id=c.user JOIN (SELECT fromUser, COUNT(case when onRead=0 then 1 else null end) unread FROM message GROUP BY fromUser) m2 ON m.fromUser=m2.fromUser JOIN user u3 ON u3.id=interlocutor.id WHERE '$token' IN (u1.token, u2.token) GROUP BY interlocutor.id";
 
         $dialogs = $this->DB->execute($query, null, true);
         foreach ($dialogs as &$dialog) {

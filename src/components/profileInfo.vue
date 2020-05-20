@@ -5,26 +5,31 @@
         <avatar :img="userData.avatar" :size="120" />
 
         <div class="name-activity">
-          <h1 class="name">{{userData.name}}</h1>
+          <h1 class="name">{{ userData.name }}</h1>
           <div class="activity wrp" v-if="userData.activity">
             <heart-icon />
-            <span>{{userData.activity}}</span>
+            <span>{{ userData.activity }}</span>
           </div>
         </div>
       </div>
 
       <div class="description-contacts-buttons">
-        <description-limited v-if="userData.description" :text="userData.description" />
+        <description-limited
+          v-if="userData.description"
+          :text="userData.description"
+        />
 
         <div class="contacts" v-if="userData.phone || userData.city">
           <p class="title">Контакты:</p>
           <div class="wrp" v-if="userData.city">
             <location-icon />
-            <span class="home-city">{{userData.region+", "+userData.city}}</span>
+            <span class="home-city">{{
+              userData.region + ", " + userData.city
+            }}</span>
           </div>
           <div class="wrp" v-if="userData.phone">
             <phone-icon />
-            <span>{{userData.phone}}</span>
+            <span>{{ userData.phone }}</span>
           </div>
         </div>
 
@@ -36,11 +41,14 @@
 
           <template v-else>
             <button class="fill">
-              <heart-icon />
+              <heart-icon :color="'white'" />
               <span>В любимые</span>
             </button>
-            <button class="fill">
-              <img class="mess-icon" src="/assets/img/mess_icon.png " />
+            <button
+              class="fill"
+              @click="$router.push(`/messages/${userData.id}`)"
+            >
+              <message-icon :color="'white'" />
               <span>Написать</span>
             </button>
             <button class="fill">
@@ -61,20 +69,21 @@ export default {
   props: {
     isSelf: {
       type: Boolean,
-      default: false
+      default: false,
     },
     userData: {
       type: Object,
       default: () => ({
+        id: null,
         name: null,
         avatar: null,
         description: null,
         activity: null,
         city: null,
         phone: null,
-        docs: []
-      })
-    }
+        docs: [],
+      }),
+    },
   },
   components: {
     avatar: () => import("./avatar"),
@@ -84,8 +93,9 @@ export default {
     locationIcon: () => import("./svg/locationIcon"),
     heartIcon: () => import("./svg/heartIcon"),
     phoneIcon: () => import("./svg/phoneIcon"),
-    penIcon: () => import("./svg/penIcon")
-  }
+    penIcon: () => import("./svg/penIcon"),
+    messageIcon: () => import("./svg/messageIcon"),
+  },
 };
 </script>
 
@@ -106,16 +116,13 @@ export default {
 .avatar-name-activity {
   display: flex;
 }
-
 .profile-info .name-activity {
   margin-left: 25px;
 }
-
 .profile-info .name-activity,
 .activity {
   margin-top: 10px;
 }
-
 .wrp {
   display: flex;
   align-items: center;
@@ -123,7 +130,6 @@ export default {
 .wrp > span {
   margin-left: 10px;
 }
-
 .description-contacts-buttons {
   margin-top: 20px;
   display: grid;
@@ -134,15 +140,23 @@ export default {
 .activity span {
   color: #a1a1a1;
 }
-
 .profile-info .title {
   margin-bottom: 5px;
 }
-
 .contacts > .wrp:not(:last-of-type) {
   margin-bottom: 5px;
 }
-.profile-info .buttons>*:not(:last-of-type) {
-    margin-right: 10px;
+.profile-info .buttons > *:not(:last-of-type) {
+  margin-right: 10px;
+}
+.profile-info .buttons > * {
+  display: flex;
+  align-items: center;
+}
+.buttons {
+  display: flex;
+}
+.profile-info .buttons > button > *:not(:last-child) {
+  margin-right: 10px;
 }
 </style>
