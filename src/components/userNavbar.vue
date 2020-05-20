@@ -33,7 +33,7 @@
               <router-link to="#">Закладки</router-link>
               <router-link to="#">F.A.Q</router-link>
               <router-link to="#">Настройки</router-link>
-              <router-link to="#">Выход</router-link>
+              <button class="link" @click="logout">Выход</button>
             </ul>
           </li>
         </ul>
@@ -44,7 +44,7 @@
 </template>
 
 <script>
-import { mapGetters } from "vuex";
+import { mapGetters, mapActions } from "vuex";
 export default {
   name: "user-navbar",
   components: {
@@ -56,6 +56,18 @@ export default {
   }),
   computed: {
     ...mapGetters(["PROFILE"]),
+  },
+  methods: {
+    ...mapActions(["AUTH_LOGOUT"]),
+    logout() {
+      this.AUTH_LOGOUT()
+        .then(() => {
+          this.$router.push("/");
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    },
   },
 };
 </script>

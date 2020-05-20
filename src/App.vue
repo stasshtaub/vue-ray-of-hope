@@ -70,7 +70,7 @@ export default {
   padding: 0;
   font-family: "Segoe", sans-serif;
   font-size: 1rem;
-  line-height: 1.35rem;
+  line-height: 1.35em;
 }
 body {
   overflow: hidden;

@@ -4,7 +4,7 @@
       <h1 class="header-title">Луч надежды</h1>
       <p class="subtitle">Благотворительная информационная площадка</p>
       <a href="https://play.google.com/store/apps" class="googlePlayLink">
-        <img src="assets/img/google-play.png" alt="Доступно в Google Play" class="googlePlayBtn" />
+        <google-play-icon />
       </a>
     </div>
   </section>
@@ -12,7 +12,10 @@
 
 <script>
 export default {
-  name: "hello-screen"
+  name: "hello-screen",
+  components: {
+    googlePlayIcon: () => import("./svg/googlePlayIcon"),
+  },
 };
 </script>
 
@@ -23,6 +26,17 @@ export default {
   background-size: cover;
   overflow: auto;
 }
+.hello-screen .container {
+  position: relative;
+  height: calc(100% - 250px);
+  margin-top: 250px;
+}
+a.googlePlayLink {
+    display: block;
+    line-height: 0;
+    position: absolute;
+    bottom: 150px;
+}
 .hello-screen * {
   color: white;
 }
@@ -30,13 +44,11 @@ export default {
   text-transform: uppercase;
   font-weight: 300;
   font-size: 2.5rem;
-  margin-top: 195px;
   letter-spacing: 0.7rem;
 }
 .subtitle {
   width: unset;
   font-size: 2rem;
-  margin-top: 32px;
   color: white;
   font-family: "SegoeLight", sans-serif;
 }
