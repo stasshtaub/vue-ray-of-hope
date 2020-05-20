@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Хост: 127.0.0.1:3306
--- Время создания: Май 17 2020 г., 09:53
+-- Время создания: Май 20 2020 г., 09:19
 -- Версия сервера: 10.3.22-MariaDB-log
 -- Версия PHP: 7.3.16
 
@@ -1285,6 +1285,13 @@ CREATE TABLE `event` (
   `address` varchar(255) COLLATE utf8_unicode_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
+--
+-- Дамп данных таблицы `event`
+--
+
+INSERT INTO `event` (`note`, `start_date`, `end_date`, `address`) VALUES
+(26, '2020-05-01', '2020-05-01', 'zhopa');
+
 -- --------------------------------------------------------
 
 --
@@ -1313,10 +1320,12 @@ CREATE TABLE `image` (
 --
 
 INSERT INTO `image` (`id`, `note`, `url`) VALUES
-(2, 1, '/content/organizations/19/posts/1/images/image1.jpg'),
-(3, 1, '/content/organizations/19/posts/1/images/image2.jpg'),
-(4, 1, '/content/organizations/19/posts/1/images/image3.jpeg'),
-(5, 1, '/content/organizations/19/posts/1/images/image4.jpeg');
+(18, 26, '/content/organizations/19/posts/26/images/gori-2560x1440-4k-hd-zima-sneg-12589.jpg'),
+(19, 26, '/content/organizations/19/posts/26/images/gori-2560x1440-nebo-4k-5k-zakat-android-oboi-11473.jpg'),
+(20, 26, '/content/organizations/19/posts/26/images/S_91FO3s9jA.jpg'),
+(21, 27, '/content/organizations/19/posts/27/images/gh1K22Bx9LI.jpg'),
+(22, 27, '/content/organizations/19/posts/27/images/jb5eCSsDf-M.jpg'),
+(23, 28, '/content/organizations/19/posts/28/images/jb5eCSsDf-M.jpg');
 
 -- --------------------------------------------------------
 
@@ -1378,7 +1387,20 @@ INSERT INTO `message` (`id`, `fromUser`, `toUser`, `onRead`, `text`) VALUES
 (5, 19, 17, 0, 'привет'),
 (6, 17, 19, 0, 'привет2'),
 (7, 19, 17, 0, 'ааааааааааааааааа'),
-(8, 17, 19, 0, 'бббббббббббббббббббббббббббббббббббббббббббббббббббббббббббббббббббббб');
+(8, 17, 19, 0, 'бббббббббббббббббббббббббббббббббббббббббббббббббббббббббббббббббббббб'),
+(9, 19, 17, 0, 'жопа'),
+(10, 19, 17, 0, 'хуй'),
+(11, 17, 19, 0, 'жопа'),
+(12, 19, 17, 0, 'сам жопа'),
+(13, 19, 17, 0, 'жлоопа'),
+(14, 19, 17, 0, 'пися'),
+(15, 19, 17, 0, ',h,guri'),
+(16, 19, 17, 0, 'нормально?'),
+(17, 17, 19, 0, 'нормальна'),
+(18, 19, 17, 0, 'мой хароший купил мне покушать я люблю тебя. доделай этот ебучий курsuch и мы будем счастливы.сердечко. '),
+(19, 19, 17, 0, '❤'),
+(20, 19, 17, 0, 'lkhl'),
+(21, 19, 17, 0, '❤');
 
 -- --------------------------------------------------------
 
@@ -1388,7 +1410,7 @@ INSERT INTO `message` (`id`, `fromUser`, `toUser`, `onRead`, `text`) VALUES
 
 CREATE TABLE `need` (
   `note` int(11) UNSIGNED NOT NULL,
-  `need_items` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `need_items` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   `need_count` int(11) NOT NULL,
   `collected_count` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
@@ -1401,20 +1423,21 @@ CREATE TABLE `need` (
 
 CREATE TABLE `note` (
   `id` int(11) UNSIGNED NOT NULL,
-  `type` int(11) UNSIGNED NOT NULL,
+  `type` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   `author` int(11) UNSIGNED NOT NULL,
-  `publication_date` date NOT NULL,
-  `description` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `applications` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL
+  `publication_date` datetime NOT NULL DEFAULT current_timestamp(),
+  `description` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
 -- Дамп данных таблицы `note`
 --
 
-INSERT INTO `note` (`id`, `type`, `author`, `publication_date`, `description`, `applications`) VALUES
-(1, 1, 19, '2020-05-02', 'описание мероприятия', NULL),
-(3, 3, 18, '2020-05-04', 'описание события', NULL);
+INSERT INTO `note` (`id`, `type`, `author`, `publication_date`, `description`) VALUES
+(3, 'note', 18, '2020-05-04 00:00:00', 'описание события'),
+(26, 'event', 19, '2020-05-19 22:14:08', ''),
+(27, 'note', 19, '2020-05-19 22:15:42', ''),
+(28, 'note', 19, '2020-05-19 22:16:02', 'ЖАПЫ');
 
 -- --------------------------------------------------------
 
@@ -1584,7 +1607,6 @@ INSERT INTO `type_account` (`name`, `description`) VALUES
 --
 
 CREATE TABLE `type_note` (
-  `id` int(11) UNSIGNED NOT NULL,
   `name` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `description` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci ROW_FORMAT=COMPACT;
@@ -1593,10 +1615,10 @@ CREATE TABLE `type_note` (
 -- Дамп данных таблицы `type_note`
 --
 
-INSERT INTO `type_note` (`id`, `name`, `description`) VALUES
-(1, 'event', NULL),
-(2, 'need', NULL),
-(3, 'note', NULL);
+INSERT INTO `type_note` (`name`, `description`) VALUES
+('event', NULL),
+('need', NULL),
+('note', NULL);
 
 -- --------------------------------------------------------
 
@@ -1639,7 +1661,7 @@ CREATE TABLE `user` (
 INSERT INTO `user` (`id`, `type_of_account`, `avatar`, `description`, `email`, `password`, `token`) VALUES
 (17, 'организация', NULL, NULL, 's@sdfsdf.re', '246092d7178bef8ac6948bbf4528752a', '8W2DO8w4'),
 (18, 'организация', NULL, NULL, 'sdfsf@sdfsdf.re', '736723ddec5909fcea54fbbf0cd04154', 'nCUQG8yh'),
-(19, 'организация', '/content/organizations/19/avatar.jpg', 'какое-то описание', 'sdfs222f@sdfsdf.re', '97afb7c3b3a4ab4a1add73d456bcdb66', '8cw2ZdjK');
+(19, 'организация', '/content/organizations/19/avatar.jpg', 'какое-то описание', 'sdfs222f@sdfsdf.re', '246092d7178bef8ac6948bbf4528752a', '7fxAJBAk');
 
 --
 -- Индексы сохранённых таблиц
@@ -1769,7 +1791,7 @@ ALTER TABLE `type_account`
 -- Индексы таблицы `type_note`
 --
 ALTER TABLE `type_note`
-  ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`name`);
 
 --
 -- Индексы таблицы `type_of_activity`
@@ -1810,25 +1832,19 @@ ALTER TABLE `doc`
 -- AUTO_INCREMENT для таблицы `image`
 --
 ALTER TABLE `image`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=24;
 
 --
 -- AUTO_INCREMENT для таблицы `message`
 --
 ALTER TABLE `message`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
 
 --
 -- AUTO_INCREMENT для таблицы `note`
 --
 ALTER TABLE `note`
-  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
-
---
--- AUTO_INCREMENT для таблицы `type_note`
---
-ALTER TABLE `type_note`
-  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=29;
 
 --
 -- AUTO_INCREMENT для таблицы `user`
@@ -1885,6 +1901,12 @@ ALTER TABLE `favorite_organization`
   ADD CONSTRAINT `favorite_organization_ibfk_2` FOREIGN KEY (`civilian`) REFERENCES `civilian` (`user`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
+-- Ограничения внешнего ключа таблицы `image`
+--
+ALTER TABLE `image`
+  ADD CONSTRAINT `image_ibfk_1` FOREIGN KEY (`note`) REFERENCES `note` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
 -- Ограничения внешнего ключа таблицы `markers`
 --
 ALTER TABLE `markers`
@@ -1907,8 +1929,8 @@ ALTER TABLE `message`
 -- Ограничения внешнего ключа таблицы `note`
 --
 ALTER TABLE `note`
-  ADD CONSTRAINT `note_ibfk_1` FOREIGN KEY (`type`) REFERENCES `type_note` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `note_ibfk_2` FOREIGN KEY (`author`) REFERENCES `organization` (`user_id`);
+  ADD CONSTRAINT `note_ibfk_2` FOREIGN KEY (`author`) REFERENCES `organization` (`user_id`),
+  ADD CONSTRAINT `note_ibfk_3` FOREIGN KEY (`type`) REFERENCES `type_note` (`name`) ON DELETE SET NULL ON UPDATE SET NULL;
 
 --
 -- Ограничения внешнего ключа таблицы `organization`
