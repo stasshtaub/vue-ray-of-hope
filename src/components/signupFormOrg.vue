@@ -189,6 +189,7 @@ export default {
           .catch(error => {
             switch (error.response.status) {
               case 400:
+                alert("Неверный запрос: " + error.response.data.status);
                 break;
               case 422:
                 for (var key in error.response.data.errors) {
@@ -196,7 +197,7 @@ export default {
                 }
                 break;
               case 500:
-                alert("Ошибка базы данных: " + error.response.data.status);
+                alert("Ошибка сервера: " + error.response.data.status);
                 break;
               default:
                 alert(
