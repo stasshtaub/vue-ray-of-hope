@@ -15,14 +15,12 @@ class organizationController
 
     function getOrg($id)
     {
-        $result["status"] = "OK";
         $result["profile"] = $this->model->getOrg($id);
         echo json_encode($result, JSON_PRETTY_PRINT);
     }
 
     function getAll($type = null)
     {
-        $result["status"] = "OK";
         $result["organizations"] = $this->model->getOrgList($type);
         echo json_encode($result, JSON_PRETTY_PRINT);
     }

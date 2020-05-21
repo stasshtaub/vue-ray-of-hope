@@ -6,8 +6,6 @@ namespace Controllers;
 use Models\signupModel;
 use Core\Validator;
 
-// require_once ROOT_DIR . "/models/signupModel.php";
-// require_once ROOT_DIR . "/core/Validator.php";
 class signupController
 {
     private $model;
