@@ -173,7 +173,6 @@ export default {
     },
     async register() {
       let validateResult = this.validate();
-      console.log(validateResult);
       if (!Object.keys(validateResult).length) {
         await this.ORG_SIGNUP_REQUEST({
           email: this.textBoxes.email.value,
@@ -183,7 +182,6 @@ export default {
           name: this.textBoxes.name.value
         })
           .then(() => {
-            console.log(this.PROFILE);
             this.$router.push("/");
           })
           .catch(error => {

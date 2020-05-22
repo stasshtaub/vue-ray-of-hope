@@ -49,7 +49,6 @@ export default {
       img.src = url;
     },
     initialize() {
-      console.log("initialize");
       this.processedImages = [];
       this.maxWidth = this.$el.clientWidth;
 

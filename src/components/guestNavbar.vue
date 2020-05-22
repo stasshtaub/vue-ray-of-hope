@@ -43,7 +43,6 @@ export default {
   },
   mounted() {
     this.$root.$on("home-scroll", (vertical) => {
-      console.log(vertical);
       this.scroll = !!vertical.scrollTop;
     });
   },
