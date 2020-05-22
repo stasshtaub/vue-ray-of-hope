@@ -30,37 +30,37 @@ export default {
         placeholder: "Название",
         tooltip:
           "Зарегистрированное<br>или привычное для граждан<br>название организации",
-        error: ""
+        error: "",
       },
       inn: {
         value: "",
         type: "text",
         placeholder: "ИНН",
         tooltip: "10 цифр",
-        error: ""
+        error: "",
       },
       email: {
         value: "",
         placeholder: "E-mail",
         type: "email",
         tooltip: "",
-        error: ""
+        error: "",
       },
       password: {
         value: "",
         placeholder: "Пароль",
         type: "password",
         tooltip: "Минимум 8 знаков: цифры и латинские буквы",
-        error: ""
+        error: "",
       },
       confirmPassword: {
         value: "",
         placeholder: "Подтверждение пароля",
         type: "password",
         tooltip: "",
-        error: ""
-      }
-    }
+        error: "",
+      },
+    },
   }),
   methods: {
     ...mapActions(["ORG_SIGNUP_REQUEST"]),
@@ -179,14 +179,15 @@ export default {
           inn: this.textBoxes.inn.value,
           password: this.textBoxes.password.value,
           confirmPassword: this.textBoxes.confirmPassword.value,
-          name: this.textBoxes.name.value
+          name: this.textBoxes.name.value,
         })
           .then(() => {
             this.$router.push("/");
           })
-          .catch(error => {
+          .catch((error) => {
             switch (error.response.status) {
               case 400:
+                alert("Неверный запрос: " + error.response.data.status);
                 break;
               case 422:
                 for (var key in error.response.data.errors) {
@@ -194,7 +195,7 @@ export default {
                 }
                 break;
               case 500:
-                alert("Ошибка базы данных: " + error.response.data.status);
+                alert("Ошибка сервера: " + error.response.data.status);
                 break;
               default:
                 alert(
@@ -207,11 +208,11 @@ export default {
           this.textBoxes[key].error = validateResult[key];
         }
       }
-    }
+    },
   },
   computed: {
-    ...mapGetters(["PROFILE"])
-  }
+    ...mapGetters(["PROFILE"]),
+  },
 };
 </script>
 

@@ -3,7 +3,7 @@
     <template v-if="PROFILE">
       <user-navbar></user-navbar>
       <vue-scroll :ops="scrollOps">
-        <div class="container outer">
+        <div class="container content">
           <keep-alive>
             <router-view></router-view>
           </keep-alive>
@@ -69,7 +69,7 @@ export default {
   max-width: calc(100vw - 40px);
   margin: 0 auto;
 }
-.user-layout .container.outer {
+.user-layout .container.content {
   padding-top: 30px;
   padding-bottom: 30px;
 }
