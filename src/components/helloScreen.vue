@@ -27,9 +27,8 @@ export default {
   overflow: auto;
 }
 .hello-screen .container {
-  position: relative;
   height: calc(100% - 250px);
-  margin-top: 250px;
+  margin-top: 250px !important;
 }
 a.googlePlayLink {
     display: block;
