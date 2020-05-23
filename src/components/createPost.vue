@@ -153,12 +153,6 @@ export default {
     changeNeed(data) {
       this.need[data.property] = data.value;
     },
-    changeNeedCount(count) {
-      this.need.needCount = count;
-    },
-    changeCollectedCount(count) {
-      this.need.collectedCount = count;
-    }
   },
   created() {
     document
