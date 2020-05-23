@@ -9,6 +9,11 @@ class Router
     function start()
     {
         $dispatcher = \FastRoute\simpleDispatcher(function (\FastRoute\RouteCollector $r) {
+            $r->addRoute('POST', '/api/signup/organization', [
+                "controllerName" => "Controllers\\signupController",
+                "method" => "registrationOrganization"
+
+            ]);
             $r->addRoute('POST', '/api/login/organization', [
                 "controllerName" => "Controllers\\loginController",
                 "method" => "loginOrganization"
