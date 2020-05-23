@@ -14,7 +14,7 @@ class signupController
         $this->model = new signupModel();
     }
 
-    function registration(string $email, string $inn, string $password, string $confirmPassword, string $name)
+    function registrationOrganization(string $email, string $inn, string $password, string $confirmPassword, string $name)
     {
         $validateErrors = Validator::validateRegOrg($email, $inn, $password, $confirmPassword, $name);
         if (empty($validateErrors)) {

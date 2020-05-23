@@ -138,6 +138,9 @@ export default {
       }
       if (Object.keys(requestData).length) {
         this.EDIT_PROFILE(requestData)
+          .then(() => {
+            alert("Профиль успешно изменён");
+          })
           .catch((err) => {
             console.log(err);
           });
@@ -194,6 +197,6 @@ label.uploadPhoto {
 .imput-title-docs {
   text-align: center;
   margin-bottom: 20px;
-  color: #a1a1a1
+  color: #a1a1a1;
 }
 </style>

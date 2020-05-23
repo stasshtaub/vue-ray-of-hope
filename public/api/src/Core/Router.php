@@ -33,6 +33,10 @@ class Router
                 "controllerName" => "Controllers\\convertController",
                 "method" => "convert"
             ]);
+            $r->addRoute('POST', '/api/dialog/{to:\d+}', [
+                "controllerName" => "Controllers\\dialogController",
+                "method" => "sendMessage"
+            ]);
             $r->addRoute('GET', '/api/organizations/{oid:\d+}/posts/{pid:\d+}', [
                 "controllerName" => "Controllers\\postController",
                 "method" => "getPostOrg"
@@ -94,7 +98,7 @@ class Router
                 $handler = $routeInfo[1];
                 $vars = $routeInfo[2];
                 $controller = new $handler["controllerName"]();
-                $data = $handler["arrParams"] ? array($this->getData($httpMethod, $vars)) : $this->getData($httpMethod, $vars);
+                $data = isset($handler["arrParams"]) ? array($this->getData($httpMethod, $vars)) : $this->getData($httpMethod, $vars);
                 call_user_func_array(array($controller, $handler["method"]), $data);
                 break;
         }

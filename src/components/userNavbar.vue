@@ -15,10 +15,12 @@
             <router-link to="/feed">Лента</router-link>
           </li>
           <li class="nav-link">
-            <router-link to="/messages">Сообщения</router-link>
+            <router-link :to="{ name: 'messages' }">Сообщения</router-link>
           </li>
           <li class="nav-link">
-            <router-link to="/organizations">Организации</router-link>
+            <router-link :to="{ name: 'organizations' }"
+              >Организации</router-link
+            >
           </li>
           <li class="nav-link">
             <router-link to="#">Ответы</router-link>

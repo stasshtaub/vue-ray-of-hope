@@ -46,16 +46,9 @@ export default {
       this.LOGIN({
         emailOrInn: this.textBoxes.emailOrInn.value,
         password: this.textBoxes.password.value,
-      })
-        .then(() => {
-          if (this.IS_AUTHENTICATED) {
-            //this.$router.push("/");
-            //this.$router.go(this.$router.currentRoute)
-          }
-        })
-        .catch((err) => {
-          console.log(err);
-        });
+      }).catch((err) => {
+        console.log(err);
+      });
     },
   },
 };

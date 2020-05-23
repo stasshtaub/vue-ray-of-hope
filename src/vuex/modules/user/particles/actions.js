@@ -12,7 +12,7 @@ export default {
         return new Promise((resolve, reject) => {
             axios.post('/api/edit', formData)
                 .then(resp => {
-                    dispatch("PROFILE_REQUEST", resp.data.id);
+                    dispatch("PROFILE_REQUEST");
                     resolve(resp);
                 })
                 .catch(err => {
@@ -102,9 +102,9 @@ export default {
             resolve();
         })
     },
-    async PROFILE_REQUEST({ commit, dispatch }, id) {
+    async PROFILE_REQUEST({ commit, dispatch, state }) {
         return await new Promise(() => {
-            axios.get('/api/organizations/' + id)
+            axios.get('/api/organizations/' + state.profile.id)
                 .then(resp => {
                     commit("SET_PROFILE", resp.data.profile);
                 })

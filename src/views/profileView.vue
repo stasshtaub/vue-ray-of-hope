@@ -56,6 +56,7 @@ export default {
         });
     },
     async requestUserData() {
+    console.log("requestUserData PROFILEVIEW");
       await axios
         .get("/api/organizations/" + this.$route.params.id)
         .then(resp => {
@@ -81,6 +82,7 @@ export default {
     }
   },
   mounted() {
+    console.log("MOUNTED PROFILEVIEW");
     if (!this.isSelf) {
       this.requestUserData();
     }

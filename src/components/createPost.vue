@@ -162,12 +162,12 @@ export default {
   },
   created() {
     document
-      .querySelector(".user-layout .container.outer")
+      .querySelector(".user-layout .container.content")
       .setAttribute("style", "overflow: hidden; height:calc(100vh - 120px);");
   },
   beforeDestroy() {
     document
-      .querySelector(".user-layout .container.outer")
+      .querySelector(".user-layout .container.content")
       .setAttribute("style", "");
   }
 };

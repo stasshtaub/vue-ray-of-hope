@@ -10,7 +10,7 @@ abstract class baseUser
     {
         $db = new DB();
         $query = "SELECT id FROM user WHERE token='$token'";
-        $org = $this->DB->execute($query);
+        $org = $db->execute($query);
         if (!empty($org["id"])) {
             return $org["id"];
         } else {

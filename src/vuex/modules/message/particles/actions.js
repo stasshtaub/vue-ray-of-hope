@@ -1,12 +1,29 @@
+import axios from 'axios'
+
 export default {
-    async SEND_WS_DATA({ state, dispatch }, data) {
-        if (!state.ws.readyState) {
-            setTimeout(() => {
-                dispatch('SEND_WS_DATA', data);
-            }, 100);
-        } else {
-            state.ws.send(JSON.stringify(data));
+    async SEND_WS_DATA({ state, dispatch, commit }, data) {
+        switch (state.ws.readyState) {
+            case WebSocket.CLOSED:
+                if (data.command == 'message') {
+                    let fd = new FormData();
+                    fd.append('msg', data.msg);
+                    axios.post(`/api/dialog/${data.toId}`, fd)
+                        .catch(err => {
+                            commit("ERROR", err);
+                        })
+                }
+                break;
+            default:
+                if (!state.ws.readyState) {
+                    setTimeout(() => {
+                        dispatch('SEND_WS_DATA', data);
+                    }, 100);
+                } else {
+                    state.ws.send(JSON.stringify(data));
+                }
         }
+
+
     },
     WS_INIT({ dispatch, commit, rootGetters }, url) {
         const ws = new WebSocket(url);
