@@ -39,4 +39,11 @@ export default {
 .guest-layout {
   height: 100vh;
 }
+.guest-layout .container {
+    position: relative;
+    width: 1000px;
+    max-width: calc(100% - 20px);
+    padding: 0 10px;
+    margin: 0 auto;
+}
 </style>

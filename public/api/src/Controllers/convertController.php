@@ -46,6 +46,7 @@ class convertController
     {
         header("Content-Disposition: inline; filename=" . basename($path));
         header("Content-type: $contentType");
+        echo "===output===";
         readfile($path);
     }
 }

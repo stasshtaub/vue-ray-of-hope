@@ -136,12 +136,8 @@ export default {
           requestData[key] = this.editedProfile[key];
         }
       }
-      console.log(this.PROFILE.docs === this.editedProfile.docs);
       if (Object.keys(requestData).length) {
         this.EDIT_PROFILE(requestData)
-          .then((resp) => {
-            console.log(resp);
-          })
           .catch((err) => {
             console.log(err);
           });
