@@ -74,7 +74,7 @@ a[name="about"] {
 }
 .right > p {
   letter-spacing: 0rem;
-  line-height: 1.8rem;
+  line-height: 2.2rem;
   font-size: 0.95rem;
 }
 .about > h2.title {
