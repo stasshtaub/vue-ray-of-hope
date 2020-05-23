@@ -67,9 +67,9 @@ class postModel
                 $query = "INSERT INTO image (note, url) VALUE (:note, :url)";
                 $params = [
                     "note" => $noteId,
-                    "url" => "$directory/$fileName",
+                    "url" => str_replace(" ", "_", "$directory/$fileName"),
                 ];
-                $this->DB->execute($query, $params);
+                $this->DB->execute($query, $params, false, true);
             }
         }
     }
