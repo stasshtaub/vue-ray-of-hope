@@ -13,7 +13,7 @@ export default {
             axios.post('/api/edit', formData)
                 .then(resp => {
                     console.log(resp.data);
-                    // dispatch("PROFILE_REQUEST", resp.data.id);
+                    dispatch("PROFILE_REQUEST", resp.data.id);
                     resolve(resp);
                 })
                 .catch(err => {
