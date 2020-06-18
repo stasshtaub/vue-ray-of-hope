@@ -4,9 +4,7 @@
       <user-navbar></user-navbar>
       <vue-scroll :ops="scrollOps">
         <div class="container content">
-          <keep-alive>
-            <router-view></router-view>
-          </keep-alive>
+          <router-view></router-view>
         </div>
       </vue-scroll>
     </template>

@@ -3,6 +3,7 @@
 namespace Models;
 
 use Core\DB;
+use Core\fileModificator;
 use Exception;
 
 class postModel
@@ -61,7 +62,8 @@ class postModel
         if (!file_exists($fullDirectory)) {
             $createDirResult = mkdir($fullDirectory, 0777, true);
         }
-        foreach ($images['name'] as $i => $fileName) {
+        foreach ($images['name'] as $i => &$fileName) {
+            $fileName = fileModificator::nameModify($fileName);
             $path = "$fullDirectory/$fileName";
             if (move_uploaded_file($images['tmp_name'][$i], $path)) {
                 $query = "INSERT INTO image (note, url) VALUE (:note, :url)";
@@ -69,7 +71,7 @@ class postModel
                     "note" => $noteId,
                     "url" => "$directory/$fileName",
                 ];
-                $this->DB->execute($query, $params);
+                $this->DB->execute($query, $params, false, true);
             }
         }
     }

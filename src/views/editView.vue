@@ -135,9 +135,9 @@ export default {
       if (Object.keys(requestData).length) {
         this.EDIT_PROFILE(requestData)
           .then(() => {
-            alert("Профиль сохранён");
+            alert("Профиль успешно изменён");
           })
-          .catch(err => {
+          .catch((err) => {
             console.log(err);
           });
       }

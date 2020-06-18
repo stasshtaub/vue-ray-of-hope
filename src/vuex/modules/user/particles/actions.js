@@ -40,13 +40,12 @@ export default {
         return await new Promise((resolve, reject) => {
             commit("ORG_SIGNUP_REQUEST");
             var data = new FormData();
-            data.append("type", "organization");
             data.append("email", email);
             data.append("inn", inn);
             data.append("password", password);
             data.append("confirmPassword", confirmPassword);
             data.append("name", name);
-            axios.post('/api/signup', data)
+            axios.post('/api/signup/organization', data)
                 .then(resp => {
                     var token = resp.data.token;
                     localStorage.setItem('user-token', token);
@@ -104,9 +103,9 @@ export default {
             resolve();
         })
     },
-    async PROFILE_REQUEST({ commit, dispatch }, id) {
+    async PROFILE_REQUEST({ commit, dispatch, state }) {
         return await new Promise(() => {
-            axios.get('/api/organizations/' + id)
+            axios.get('/api/organizations/' + state.profile.id)
                 .then(resp => {
                     commit("SET_PROFILE", resp.data.profile);
                 })

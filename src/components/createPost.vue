@@ -153,21 +153,15 @@ export default {
     changeNeed(data) {
       this.need[data.property] = data.value;
     },
-    changeNeedCount(count) {
-      this.need.needCount = count;
-    },
-    changeCollectedCount(count) {
-      this.need.collectedCount = count;
-    }
   },
   created() {
     document
-      .querySelector(".user-layout .container.outer")
+      .querySelector(".user-layout .container.content")
       .setAttribute("style", "overflow: hidden; height:calc(100vh - 120px);");
   },
   beforeDestroy() {
     document
-      .querySelector(".user-layout .container.outer")
+      .querySelector(".user-layout .container.content")
       .setAttribute("style", "");
   }
 };

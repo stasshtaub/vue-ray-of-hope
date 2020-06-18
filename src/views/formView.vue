@@ -15,7 +15,7 @@ export default {};
   align-items: center;
   min-height: 100vh;
   width: 100vw;
-  background-image: url("~@/assets/img/form-view-bcg.jpg");
+  background-image: url("~@/assets/img/form-view-bcg.svg");
   background-size: cover;
 }
 .form-view .form-wrapper {

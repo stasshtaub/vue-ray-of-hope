@@ -15,14 +15,16 @@ let router = new Router({
         component: () =>
             import ('../views/messagesView'),
         children: [{
-            path: '/',
-            component: () =>
-                import ("../components/dialogsList"),
-        }, {
             path: ':fromId',
+            name: 'dialog',
             component: () =>
                 import ("../components/dialog"),
             props: true
+        }, {
+            path: '',
+            name: 'messages',
+            component: () =>
+                import ("../components/dialogsList"),
         }],
         meta: {
             requiresAuth: true
@@ -70,13 +72,15 @@ let router = new Router({
         component: () =>
             import ('../views/organizationsView'),
         children: [{
-            path: '/',
-            component: () =>
-                import ("../components/organizationsList")
-        }, {
             path: ':id',
+            name: 'organization',
             component: () =>
                 import ("../views/profileView")
+        }, {
+            path: '',
+            name: 'organizations',
+            component: () =>
+                import ("../components/organizationsList")
         }],
         meta: {
             requiresAuth: true

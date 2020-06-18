@@ -14,29 +14,13 @@ class signupController
         $this->model = new signupModel();
     }
 
-    function POST(string $type, string $email, string $inn, string $password, string $confirmPassword, string $name)
+    function registrationOrganization(string $email, string $inn, string $password, string $confirmPassword, string $name)
     {
-        switch ($type) {
-            case "organization":
-                $validateErrors = Validator::validateRegOrg($email, $inn, $password, $confirmPassword, $name);
-                break;
-            case "citizen":
-                break;
-            default:
-                echo "Некорректный тип пользователя";
-                exit(400);
-        }
+        $validateErrors = Validator::validateRegOrg($email, $inn, $password, $confirmPassword, $name);
         if (empty($validateErrors)) {
-            try {
-                http_response_code(201);
-                $result = $type == "organization" ? $this->model->registerOrg($email, $inn, $password, $name) : $this->model->registerCitizen();
-                $result["status"] = "OK";
-                echo json_encode($result, JSON_PRETTY_PRINT);
-            } catch (\Exception $e) {
-                http_response_code($e->getCode());
-                $result["status"] = $e->getMessage();
-                echo json_encode($result, JSON_PRETTY_PRINT);
-            }
+            http_response_code(201);
+            $result = $this->model->registerOrg($email, $inn, $password, $name);
+            echo json_encode($result, JSON_PRETTY_PRINT);
         } else {
             http_response_code(422);
             $result["status"] = "VALIDATE_ERROR";

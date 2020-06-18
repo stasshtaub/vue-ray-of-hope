@@ -180,29 +180,25 @@ export default {
           password: this.textBoxes.password.value,
           confirmPassword: this.textBoxes.confirmPassword.value,
           name: this.textBoxes.name.value,
-        })
-          .then(() => {
-            this.$router.push("/");
-          })
-          .catch((error) => {
-            switch (error.response.status) {
-              case 400:
-                alert("Неверный запрос: " + error.response.data.status);
-                break;
-              case 422:
-                for (var key in error.response.data.errors) {
-                  this.textBoxes[key].error = error.response.data.errors[key];
-                }
-                break;
-              case 500:
-                alert("Ошибка сервера: " + error.response.data.status);
-                break;
-              default:
-                alert(
-                  "Что-то пошло не так, код ошибки: " + error.response.status
-                );
-            }
-          });
+        }).catch((error) => {
+          switch (error.response.status) {
+            case 400:
+              alert("Неверный запрос: " + error.response.data.status);
+              break;
+            case 422:
+              for (var key in error.response.data.errors) {
+                this.textBoxes[key].error = error.response.data.errors[key];
+              }
+              break;
+            case 500:
+              alert("Ошибка сервера: " + error.response.data.status);
+              break;
+            default:
+              alert(
+                "Что-то пошло не так, код ошибки: " + error.response.status
+              );
+          }
+        });
       } else {
         for (let key in validateResult) {
           this.textBoxes[key].error = validateResult[key];
