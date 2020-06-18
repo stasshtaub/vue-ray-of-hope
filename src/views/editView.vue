@@ -51,11 +51,7 @@
     </div>
     <div class="docs">
       <div class="imput-title-docs">Документы</div>
-      <profile-doc-list
-        :docs="editedProfile.docs"
-        :canUpload="true"
-        @addDoc="docInput"
-      />
+      <profile-doc-list :docs="editedProfile.docs" :canUpload="true" @addDoc="docInput" />
     </div>
   </div>
 </template>
@@ -69,7 +65,7 @@ export default {
   data: () => ({
     editedProfile: {},
     previewAvatar: null,
-    cityList: [],
+    cityList: []
   }),
   components: {
     avatar: () => import("../components/avatar"),
@@ -78,10 +74,10 @@ export default {
     customSelect: () => import("../components/custom-select"),
     cityListTextbox: () => import("../components/cityListTextbox"),
 
-    cameraIcon: () => import("../components/svg/cameraIcon"),
+    cameraIcon: () => import("../components/svg/cameraIcon")
   },
   computed: {
-    ...mapGetters(["PROFILE"]),
+    ...mapGetters(["PROFILE"])
   },
   mounted() {
     this.editedProfile = Object.assign({}, this.PROFILE);
@@ -90,16 +86,16 @@ export default {
     ...mapActions(["EDIT_PROFILE"]),
     requestCityList(text) {
       Axios.get("/api/city?search=" + text)
-        .then((resp) => {
+        .then(resp => {
           this.cityList = resp.data.cityList;
         })
-        .catch((err) => {
+        .catch(err => {
           console.log(err.message);
         });
     },
     docInput(e) {
       var files = e.target.files;
-      files.forEach((file) => this.previewDOC(file));
+      files.forEach(file => this.previewDOC(file));
     },
     avatarInput(e) {
       let file = e.target.files[0];
@@ -111,21 +107,21 @@ export default {
       data.append("doc", file);
       Axios.post("/api/convert", data, {
         headers: {
-          "Content-Type": "multipart/form-data",
+          "Content-Type": "multipart/form-data"
         },
-        responseType: "blob",
+        responseType: "blob"
       })
-        .then((resp) => {
+        .then(resp => {
           let reader = new FileReader();
           reader.onloadend = () => {
             this.editedProfile.docs.push({
               url: URL.createObjectURL(file),
-              preview: reader.result,
+              preview: reader.result
             });
           };
           reader.readAsDataURL(resp.data);
         })
-        .catch((err) => {
+        .catch(err => {
           console.log(err.message);
         });
     },
@@ -138,12 +134,15 @@ export default {
       }
       if (Object.keys(requestData).length) {
         this.EDIT_PROFILE(requestData)
-          .catch((err) => {
+          .then(() => {
+            alert("Профиль сохранён");
+          })
+          .catch(err => {
             console.log(err);
           });
       }
-    },
-  },
+    }
+  }
 };
 </script>
 
@@ -194,6 +193,6 @@ label.uploadPhoto {
 .imput-title-docs {
   text-align: center;
   margin-bottom: 20px;
-  color: #a1a1a1
+  color: #a1a1a1;
 }
 </style>

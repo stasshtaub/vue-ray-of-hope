@@ -12,7 +12,8 @@ export default {
         return new Promise((resolve, reject) => {
             axios.post('/api/edit', formData)
                 .then(resp => {
-                    dispatch("PROFILE_REQUEST", resp.data.id);
+                    console.log(resp.data);
+                    // dispatch("PROFILE_REQUEST", resp.data.id);
                     resolve(resp);
                 })
                 .catch(err => {
